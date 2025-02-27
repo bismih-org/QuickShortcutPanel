@@ -1,6 +1,6 @@
 import os
 
-class Path:
+class Paths:
     # HOME -> /home/user
     HOME = os.path.expanduser("~")
     config_path = HOME + "/.config/quick_shortcut_panel"

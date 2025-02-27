@@ -1,8 +1,8 @@
 import coloredlogs
 import logging
-from static.file_paths import Paths as path
 import datetime
 
+from src.static.file_paths import Paths as path
 
 class Log:
     def __init__(self):

@@ -1,6 +1,6 @@
 from typing import Tuple
-from common.Logging import Log
-from static.file_paths import Paths as path
+from src.common.Logging import Log
+from src.static.file_paths import Paths as path
 
 
 class Configs:
