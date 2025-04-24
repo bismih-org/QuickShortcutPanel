@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import Any, List, Tuple
 from PyQt6.QtCore import QPoint
 from PyQt6.QtGui import QPolygon
 
@@ -7,33 +7,45 @@ import math
 
 
 class Piece:
-    def __init__(self, layer_index, piece_index):
+    def __init__(
+        self, layer_index, piece_index, text: str = "", sub_pieces: List["Piece"] = None
+    ):
         self.coordinate_list: List[QPoint] = []
         self.layer_index: int = layer_index
         self.piece_index: int = piece_index
-        self.k: int = 2
         self.angle_spacing = 1
+        self.text = text
 
         self._set_coordinate()
 
-    def _get_coordinate(self, step: int, is_inner) -> Tuple[int, int]:
-
+    def _get_coordinate(self, angle_offset: int, is_inner) -> Tuple[int, int]:
         x, y = cfg.center
-        inner = 1 if is_inner else 0
-        radian = math.radians((self.piece_index - inner) * cfg.piece_angle + step)
-        radius = self.k * ((self.piece_index - inner) * cfg.piece_radius)
+        radius_factor = self.layer_index if is_inner else self.layer_index + 1
+        radius = cfg.piece_k * (radius_factor * cfg.piece_radius)
+
+        # Parça açısı ve yay üzerindeki konumu hesapla
+        base_angle = self.piece_index * cfg.piece_angle
+        angle = base_angle + angle_offset
+
+        radian = math.radians(angle)
         return (
             int(x + (math.cos(radian) * radius)),
             int(y + (math.sin(radian) * radius)),
         )
 
     def _set_coordinate(self):
-        for s in range(cfg.piece_angle):
-            coord = self._get_coordinate(s, True)
+        # İç yay (başlangıç açısından bitiş açısına)
+        start_angle = self.piece_index * cfg.piece_angle
+        end_angle = (self.piece_index + 1) * cfg.piece_angle
+
+        # İç yay noktaları
+        for angle in range(start_angle, end_angle + 1):
+            coord = self._get_coordinate(angle - start_angle, True)
             self.coordinate_list.append(QPoint(coord[0], coord[1]))
 
-        for s in range(cfg.piece_angle):
-            coord = self._get_coordinate(s, False)
+        # Dış yay noktaları (ters sırada)
+        for angle in range(end_angle, start_angle - 1, -1):
+            coord = self._get_coordinate(angle - start_angle, False)
             self.coordinate_list.append(QPoint(coord[0], coord[1]))
 
     def get_poligon(self) -> QPolygon:
