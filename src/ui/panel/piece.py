@@ -15,8 +15,11 @@ class Piece:
         self.piece_index: int = piece_index
         self.angle_spacing = 1
         self.text = text
+        self.text_angle = 0
 
         self._set_coordinate()
+        poly = self.get_poligon()
+        self.center_pos = poly.boundingRect().center()
 
     def _get_coordinate(self, angle_offset: int, is_inner) -> Tuple[int, int]:
         x, y = cfg.center
@@ -38,6 +41,8 @@ class Piece:
         start_angle = self.piece_index * cfg.piece_angle
         end_angle = (self.piece_index + 1) * cfg.piece_angle
 
+        self.text_angle = int((start_angle + end_angle) / 2)
+
         # İç yay noktaları
         for angle in range(start_angle, end_angle + 1):
             coord = self._get_coordinate(angle - start_angle, True)
@@ -50,3 +55,9 @@ class Piece:
 
     def get_poligon(self) -> QPolygon:
         return QPolygon(self.coordinate_list)
+
+    def get_angle(self) -> int:
+        return self.text_angle
+
+    def get_center_pos(self) -> QPoint:
+        return self.center_pos
