@@ -4,8 +4,9 @@ from src.static.file_paths import Paths as path
 
 
 class Configs:
-    center: Tuple[int, int] = (10, 10)
+    center: Tuple[int, int] = (100, 100)
     piece_angle: int = 20
     piece_radius: int = 30
+    piece_k: int = 3
 
     logger = Log()

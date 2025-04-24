@@ -1,0 +1,28 @@
+- children:
+  - id: 1
+    title: menu 1
+  - children:
+    - id: 3
+      title: menu 3
+    id: 2
+    title: menu 2
+  - children:
+    - children:
+      - children:
+        - id: 10
+          title: salatalık
+        id: 9
+        title: erik
+      id: 6
+      title: menu 6
+    id: 5
+    title: menu 5
+  - children:
+    - id: 7
+      title: kiraz
+    - id: 8
+      title: muz
+    id: 4
+    title: menu 4
+  id: 0
+  title: root
