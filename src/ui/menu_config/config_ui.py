@@ -1,7 +1,5 @@
-import sys
 import yaml
 from PyQt6.QtWidgets import (
-    QApplication,
     QMainWindow,
     QTreeWidget,
     QTreeWidgetItem,
@@ -9,20 +7,12 @@ from PyQt6.QtWidgets import (
     QVBoxLayout,
     QHBoxLayout,
     QWidget,
-    QLabel,
-    QLineEdit,
     QMessageBox,
-    QFileDialog,
-    QInputDialog,
-    QDialog,
-    QFormLayout,
-    QDialogButtonBox,
 )
 from PyQt6.QtCore import Qt
 
 from src.ui.menu_config.piece_node import build_tree, PieceNode
 from src.ui.menu_config.node_editing_dialog import NodeEditDialog
-
 
 
 class ConfigPanel(QMainWindow):
@@ -33,7 +23,6 @@ class ConfigPanel(QMainWindow):
 
         self.init_variables()
         self.main_ui()
-
 
     def init_variables(self):
         self.yaml_path = "data/menu.yaml"
@@ -65,7 +54,6 @@ class ConfigPanel(QMainWindow):
 
         self.button_ui()
 
-
     def button_ui(self):
         self.button_layout = QVBoxLayout()
 
@@ -85,9 +73,6 @@ class ConfigPanel(QMainWindow):
         self.button_layout.addWidget(self.btn_save)
 
         self.main_layout.addLayout(self.button_layout)
-
-
-
 
     def on_item_selected(self):
         is_selected = len(self.tree_widget.selectedItems()) > 0
@@ -158,7 +143,7 @@ class ConfigPanel(QMainWindow):
         reply = QMessageBox.question(
             self,
             "Onay",
-            "Bu öğeyi ve tüm alt öğelerini silmek istediğinizden emin misiniz?",
+            "Bu ögeyi ve tüm alt ögelerini silmek istediğinizden emin misiniz?",
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
         )
 

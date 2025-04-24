@@ -9,4 +9,6 @@ class Configs:
     piece_radius: int = 30
     piece_k: int = 3
 
+    menu_yaml_path: str = path.menu_yaml_path
+
     logger = Log()
