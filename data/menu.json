@@ -1,0 +1,80 @@
+[
+  {
+    "title": "root",
+    "id": 0,
+    "type": "KEYBOARD_SHORTCUT",
+    "description": "Kök dizin",
+    "children": [
+      {
+        "title": "menu 1",
+        "id": 1,
+        "type": "BASH_COMMAND",
+        "description": "Birinci menü"
+      },
+      {
+        "title": "menu 2",
+        "id": 2,
+        "type": "KEYBOARD_SHORTCUT",
+        "description": "İkinci menü, alt öğeleri var",
+        "children": [
+          {
+            "title": "menu 3",
+            "id": 3,
+            "type": "BASH_COMMAND",
+            "description": "Üçüncü menü, menu 2 altında"
+          }
+        ]
+      },
+      {
+        "title": "menu 5",
+        "id": 5,
+        "type": "KEYBOARD_SHORTCUT",
+        "description": "Beşinci menü, alt öğeleri var",
+        "children": [
+          {
+            "title": "menu 6",
+            "id": 6,
+            "type": "KEYBOARD_SHORTCUT",
+            "description": "Alt menü 6, kendi altında başka öğeler var",
+            "children": [
+              {
+                "title": "erik",
+                "id": 9,
+                "type": "KEYBOARD_SHORTCUT",
+                "description": "Erik kategorisi, altında başka öğeler var",
+                "children": [
+                  {
+                    "title": "salatalık",
+                    "id": 10,
+                    "type": "BASH_COMMAND",
+                    "description": "Erik altında bir salatalık öğesi"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "menu 4",
+        "id": 4,
+        "type": "KEYBOARD_SHORTCUT",
+        "description": "Dördüncü menü, birden fazla alt öğeye sahip",
+        "children": [
+          {
+            "title": "kiraz",
+            "id": 7,
+            "type": "BASH_COMMAND",
+            "description": "Kiraz öğesi"
+          },
+          {
+            "title": "muz2",
+            "id": 8,
+            "type": "RUN_APP",
+            "description": "Muz öğesi2"
+          }
+        ]
+      }
+    ]
+  }
+]
