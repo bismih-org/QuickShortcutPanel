@@ -6,6 +6,7 @@ class Paths:
     config_path = HOME + "/.config/quick_shortcut_panel"
     log_path = config_path + "/log"
     menu_yaml_path = "data/menu.yaml"
+    menu_json_path = "data/menu.json"
 
     @classmethod
     def file_check(self, path, reset=False):

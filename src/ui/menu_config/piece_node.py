@@ -5,9 +5,11 @@ from src.ui.panel.piece import Piece
 
 
 class PieceNode:
-    def __init__(self, title: str, id_: int):
+    def __init__(self, title: str, id_: int, type_:str, description: str):
         self.title = title
         self.id = id_
+        self.type = type_
+        self.description = description
         self.children: list[PieceNode] = []
         self.layer_index = 0
         self.piece_index = 0
@@ -30,6 +32,8 @@ class PieceNode:
         result = {
             "title": self.title,
             "id": self.id,
+            "type": self.type,
+            "description": self.description,
         }
         if self.children:
             result["children"] = [child.to_dict() for child in self.children]
@@ -51,7 +55,7 @@ class PieceNode:
 
 def build_tree(data):
     # Kök düğümü oluştur
-    root = PieceNode(data["title"], data["id"])
+    root = PieceNode(data["title"], data["id"], data["type"], data["description"])
 
     # Çocukları varsa işle
     if "children" in data:
@@ -60,33 +64,3 @@ def build_tree(data):
             root.add_child(child_node)
 
     return root
-
-
-if __name__ == "__main__":
-    yaml_str = """
-    - title: root
-    id: 0
-    children:
-        - title: menu 1
-        id: 1
-        - title: menu 2
-        id: 2
-        children:
-            - title: menu 3
-            id: 3
-        - title: menu 5
-        id: 5
-        children:
-            - title: menu 6
-            id: 6
-        - title: menu 4
-        id: 4
-    """
-    data = yaml.safe_load(yaml_str)
-    root = build_tree(data[0])
-
-    for r in root.children:
-        print(r)
-        print("-" * 20)
-
-    print(root.children)

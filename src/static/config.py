@@ -10,5 +10,6 @@ class Configs:
     piece_k: int = 3
 
     menu_yaml_path: str = path.menu_yaml_path
+    menu_json_path: str = path.menu_json_path
 
     logger = Log()

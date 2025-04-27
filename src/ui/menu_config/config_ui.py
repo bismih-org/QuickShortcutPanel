@@ -1,4 +1,3 @@
-import yaml
 from PyQt6.QtWidgets import (
     QMainWindow,
     QTreeWidget,
@@ -10,9 +9,12 @@ from PyQt6.QtWidgets import (
     QMessageBox,
 )
 from PyQt6.QtCore import Qt
+import json
 
+from src.process.pro_types import Process_Type
 from src.ui.menu_config.piece_node import build_tree, PieceNode
 from src.ui.menu_config.node_editing_dialog import NodeEditDialog
+from src.static.config import Configs as cfg
 
 
 class ConfigPanel(QMainWindow):
@@ -25,9 +27,9 @@ class ConfigPanel(QMainWindow):
         self.main_ui()
 
     def init_variables(self):
-        self.yaml_path = "data/menu.yaml"
-        with open(self.yaml_path, "r", encoding="utf-8") as f:
-            data = yaml.safe_load(f)
+        self.data_path = cfg.menu_json_path
+        with open(self.data_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
 
         self.root = build_tree(data[0])
 
@@ -40,7 +42,7 @@ class ConfigPanel(QMainWindow):
         self.main_layout = QHBoxLayout(self.central_widget)
 
         self.tree_widget = QTreeWidget()
-        self.tree_widget.setHeaderLabels(["Menü", "ID"])
+        self.tree_widget.setHeaderLabels(["Menü", "ID", "Açıklama", "Tür"])
         self.tree_widget.itemSelectionChanged.connect(self.on_item_selected)
         self.tree_widget.setColumnWidth(0, 200)
         self.tree_widget.setColumnWidth(1, 50)
@@ -65,7 +67,7 @@ class ConfigPanel(QMainWindow):
         self.btn_add.clicked.connect(self.add_child_node)
         self.btn_edit.clicked.connect(self.edit_child_node)
         self.btn_delete.clicked.connect(self.delete_child_node)
-        self.btn_save.clicked.connect(self.save_yaml)
+        self.btn_save.clicked.connect(self.save_json)
 
         self.button_layout.addWidget(self.btn_add)
         self.button_layout.addWidget(self.btn_edit)
@@ -95,7 +97,12 @@ class ConfigPanel(QMainWindow):
                 QMessageBox.warning(self, "Uyarı", "Başlık boş olamaz.")
                 return
 
-            new_node = PieceNode(node_data["title"], self.menu_count)
+            new_node = PieceNode(
+                node_data["title"],
+                self.menu_count,
+                node_data["type"],
+                node_data["description"],
+            )
             self.menu_count += 1
             parent_node.children.append(new_node)  # Update data model
 
@@ -103,6 +110,8 @@ class ConfigPanel(QMainWindow):
             new_item = QTreeWidgetItem()
             new_item.setText(0, new_node.title)
             new_item.setText(1, str(new_node.id))
+            new_item.setText(2, new_node.description)
+            new_item.setText(3, Process_Type.get_type(new_node.type))
             new_item.setData(0, Qt.ItemDataRole.UserRole, new_node)
 
             selected_item.addChild(new_item)  # Add item to the tree view
@@ -116,15 +125,22 @@ class ConfigPanel(QMainWindow):
         selected_item = selected_items[0]
         node = selected_item.data(0, Qt.ItemDataRole.UserRole)
 
-        dialog = NodeEditDialog(node.title, parent=self)
+        dialog = NodeEditDialog(node.title, node.type, node.description, parent=self)
         if dialog.exec():
             node_data = dialog.get_data()
 
             # Düğümü güncelle
             node.title = node_data["title"]
+            node.type = node_data["type"]
+            node.description = node_data["description"]
 
             # Görünümü güncelle
             selected_item.setText(0, node_data["title"])
+            selected_item.setText(1, str(node.id))
+            selected_item.setText(2, node_data["description"])
+            selected_item.setText(3, Process_Type.get_type(node.type))
+            selected_item.setData(0, Qt.ItemDataRole.UserRole, node)
+            selected_item.setExpanded(True)
 
     def delete_child_node(self):
         selected_items = self.tree_widget.selectedItems()
@@ -164,6 +180,8 @@ class ConfigPanel(QMainWindow):
         root_item = QTreeWidgetItem(self.tree_widget)
         root_item.setText(0, self.root.title)
         root_item.setText(1, str(self.root.id))
+        root_item.setText(2, self.root.description)
+        root_item.setText(3, Process_Type.get_type(self.root.type))
         root_item.setData(0, Qt.ItemDataRole.UserRole, self.root)
 
         if self.root.children:
@@ -175,15 +193,16 @@ class ConfigPanel(QMainWindow):
             child_item = QTreeWidgetItem(parent_item)
             child_item.setText(0, child.title)
             child_item.setText(1, str(child.id))
+            child_item.setText(2, child.description)
+            child_item.setText(3, Process_Type.get_type(child.type))
             child_item.setData(0, Qt.ItemDataRole.UserRole, child)
 
             if child.children:
                 self.process_children(child_item, child.children)
 
-    def save_yaml(self):
+    def save_json(self):
         # Kök düğümü al
-        yml_data = [self.root.to_dict()]
-        print(yml_data)
-        # YAML dosyasını kaydet
-        with open(self.yaml_path, "w", encoding="utf-8") as f:
-            yaml.dump(yml_data, f, allow_unicode=True)
+        json_data = [self.root.to_dict()]
+        print(json_data)
+        with open(self.data_path, "w", encoding="utf-8") as f:
+            json.dump(json_data, f, ensure_ascii=False, indent=2)

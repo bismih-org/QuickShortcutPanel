@@ -4,10 +4,20 @@ from PyQt6.QtWidgets import (
     QDialog,
     QFormLayout,
     QDialogButtonBox,
+    QComboBox,
 )
 
+from src.process.pro_types import Process_Type
+
+
 class NodeEditDialog(QDialog):
-    def __init__(self, title="", parent=None):
+    def __init__(
+        self,
+        title="",
+        type_=Process_Type.BASH_COMMAND.value,
+        description="",
+        parent=None,
+    ):
         super().__init__(parent)
         self.setWindowTitle("Düğüm Düzenle")
         self.setMinimumWidth(300)
@@ -17,7 +27,16 @@ class NodeEditDialog(QDialog):
 
         # Başlık alanı
         self.title_edit = QLineEdit(title)
+        self.cmb_type = QComboBox()
+        for pro in Process_Type:
+            self.cmb_type.addItem(pro.value, pro.name)
+        self.cmb_type.setCurrentText(type_)
+        self.lbe_description = QLineEdit(description)
+        self.lbe_description.setToolTip("Açıklama giriniz")
+
         form_layout.addRow("Başlık:", self.title_edit)
+        form_layout.addRow("Tür:", self.cmb_type)
+        form_layout.addRow("Açıklama:", self.lbe_description)
 
         # Butonlar
         button_box = QDialogButtonBox(
@@ -36,4 +55,6 @@ class NodeEditDialog(QDialog):
     def get_data(self):
         return {
             "title": self.title_edit.text(),
+            "type": self.cmb_type.currentData(),
+            "description": self.lbe_description.text(),
         }

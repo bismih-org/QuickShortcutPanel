@@ -1,3 +1,4 @@
+import json
 from typing import List
 from PyQt6.QtWidgets import QWidget, QToolTip
 from PyQt6.QtGui import QPainter, QColor, QKeyEvent, QPen
@@ -34,8 +35,8 @@ class MainPanel(QWidget):
         self.active_node = self.root_node
 
     def init_variables(self):
-        with open(cfg.menu_yaml_path, "r", encoding="utf-8") as f:
-            data = yaml.safe_load(f)
+        with open(cfg.menu_json_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
 
         self.root_node = build_tree(data[0])
         PieceNode.update_layer_piece_index(self.root_node)
