@@ -5,11 +5,15 @@ from src.ui.panel.piece import Piece
 
 
 class PieceNode:
-    def __init__(self, title: str, id_: int, type_:str, description: str):
+    def __init__(
+        self, title: str, id_: int, type_: str, description: str, data: List[str]
+    ):
+
         self.title = title
         self.id = id_
         self.type = type_
         self.description = description
+        self.data = data
         self.children: list[PieceNode] = []
         self.layer_index = 0
         self.piece_index = 0
@@ -34,6 +38,7 @@ class PieceNode:
             "id": self.id,
             "type": self.type,
             "description": self.description,
+            "data": self.data,
         }
         if self.children:
             result["children"] = [child.to_dict() for child in self.children]
@@ -55,7 +60,9 @@ class PieceNode:
 
 def build_tree(data):
     # Kök düğümü oluştur
-    root = PieceNode(data["title"], data["id"], data["type"], data["description"])
+    root = PieceNode(
+        data["title"], data["id"], data["type"], data["description"], data["data"]
+    )
 
     # Çocukları varsa işle
     if "children" in data:

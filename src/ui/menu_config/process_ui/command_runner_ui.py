@@ -7,7 +7,7 @@ from PyQt6.QtWidgets import (
 )
 
 
-class CommandRunner(QDialog):
+class CommandRunnerDialog(QDialog):
     def __init__(self):
         super().__init__()
 
@@ -24,8 +24,6 @@ class CommandRunner(QDialog):
         form_layout.addWidget(self.lb_command)
         form_layout.addWidget(self.chkb_is_terminal)
 
-        form_layout.addWidget(self.title_label)
-
         # Butonlar
         button_box = QDialogButtonBox(
             QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
@@ -40,9 +38,10 @@ class CommandRunner(QDialog):
 
         self.setLayout(main_layout)
 
-
     def get_data(self):
-        return {
-            "command": self.lb_command.text(),
-            "is_terminal": self.chkb_is_terminal.isChecked(),
-        }
+        return [
+            {
+                "command": self.lb_command.text(),
+                "is_terminal": self.chkb_is_terminal.isChecked(),
+            }
+        ]

@@ -2,7 +2,7 @@
 
 # Geliştirme için
 ```console
-sudo apt install xdotool python3-pyqt6 python3-coloredlogs python3-yaml
+sudo apt install xdotool python3-pyqt6 python3-coloredlogs python3-yaml python3-xdg
 ```
 
 ![alt text](doc/app.png)

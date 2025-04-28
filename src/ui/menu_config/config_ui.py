@@ -42,7 +42,7 @@ class ConfigPanel(QMainWindow):
         self.main_layout = QHBoxLayout(self.central_widget)
 
         self.tree_widget = QTreeWidget()
-        self.tree_widget.setHeaderLabels(["Menü", "ID", "Açıklama", "Tür"])
+        self.tree_widget.setHeaderLabels(["Menü", "ID", "Açıklama", "Tür", "Veri"])
         self.tree_widget.itemSelectionChanged.connect(self.on_item_selected)
         self.tree_widget.setColumnWidth(0, 200)
         self.tree_widget.setColumnWidth(1, 50)
@@ -50,7 +50,7 @@ class ConfigPanel(QMainWindow):
         self.tree_widget.setMinimumHeight(400)
         self.tree_widget.setAlternatingRowColors(True)
 
-        self.load_yaml()
+        self.load_data()
         self.tree_widget.expandAll()
         self.main_layout.addWidget(self.tree_widget)
 
@@ -102,17 +102,13 @@ class ConfigPanel(QMainWindow):
                 self.menu_count,
                 node_data["type"],
                 node_data["description"],
+                node_data["data"],
             )
             self.menu_count += 1
             parent_node.children.append(new_node)  # Update data model
 
             # Create and add the new item to the tree widget
-            new_item = QTreeWidgetItem()
-            new_item.setText(0, new_node.title)
-            new_item.setText(1, str(new_node.id))
-            new_item.setText(2, new_node.description)
-            new_item.setText(3, Process_Type.get_type(new_node.type))
-            new_item.setData(0, Qt.ItemDataRole.UserRole, new_node)
+            new_item = self.node_on_tree(new_node)
 
             selected_item.addChild(new_item)  # Add item to the tree view
             selected_item.setExpanded(True)
@@ -125,7 +121,13 @@ class ConfigPanel(QMainWindow):
         selected_item = selected_items[0]
         node = selected_item.data(0, Qt.ItemDataRole.UserRole)
 
-        dialog = NodeEditDialog(node.title, node.type, node.description, parent=self)
+        dialog = NodeEditDialog(
+            node.title,
+            node.type,
+            node.description,
+            proc_data=node.data,
+            parent=self,
+        )
         if dialog.exec():
             node_data = dialog.get_data()
 
@@ -133,13 +135,10 @@ class ConfigPanel(QMainWindow):
             node.title = node_data["title"]
             node.type = node_data["type"]
             node.description = node_data["description"]
+            node.data = node_data["data"]
 
             # Görünümü güncelle
-            selected_item.setText(0, node_data["title"])
-            selected_item.setText(1, str(node.id))
-            selected_item.setText(2, node_data["description"])
-            selected_item.setText(3, Process_Type.get_type(node.type))
-            selected_item.setData(0, Qt.ItemDataRole.UserRole, node)
+            self.node_on_tree(node, selected_item)
             selected_item.setExpanded(True)
 
     def delete_child_node(self):
@@ -176,13 +175,9 @@ class ConfigPanel(QMainWindow):
         # TreeWidget'tan kaldır
         parent_item.removeChild(selected_item)
 
-    def load_yaml(self):
+    def load_data(self):
         root_item = QTreeWidgetItem(self.tree_widget)
-        root_item.setText(0, self.root.title)
-        root_item.setText(1, str(self.root.id))
-        root_item.setText(2, self.root.description)
-        root_item.setText(3, Process_Type.get_type(self.root.type))
-        root_item.setData(0, Qt.ItemDataRole.UserRole, self.root)
+        self.node_on_tree(self.root, root_item)
 
         if self.root.children:
             self.process_children(root_item, self.root.children)
@@ -191,14 +186,21 @@ class ConfigPanel(QMainWindow):
         self.menu_count += len(children)
         for child in children:
             child_item = QTreeWidgetItem(parent_item)
-            child_item.setText(0, child.title)
-            child_item.setText(1, str(child.id))
-            child_item.setText(2, child.description)
-            child_item.setText(3, Process_Type.get_type(child.type))
-            child_item.setData(0, Qt.ItemDataRole.UserRole, child)
+            self.node_on_tree(child, child_item)
 
             if child.children:
                 self.process_children(child_item, child.children)
+
+    def node_on_tree(self, node, item=None):
+        new_item = item if item else QTreeWidgetItem()
+        new_item.setText(0, node.title)
+        new_item.setText(1, str(node.id))
+        new_item.setText(2, node.description)
+        new_item.setText(3, Process_Type.get_name(node.type))
+        new_item.setText(4, str(node.data))
+        new_item.setData(0, Qt.ItemDataRole.UserRole, node)
+
+        return new_item
 
     def save_json(self):
         # Kök düğümü al
