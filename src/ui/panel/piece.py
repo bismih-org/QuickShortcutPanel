@@ -1,4 +1,4 @@
-from typing import Any, List, Tuple
+from typing import List, Tuple
 from PyQt6.QtCore import QPoint
 from PyQt6.QtGui import QPolygon
 
@@ -61,3 +61,6 @@ class Piece:
 
     def get_center_pos(self) -> QPoint:
         return self.center_pos
+
+    def get_radius(self) -> int:
+        return int(self.get_poligon().boundingRect().width() / 2)
