@@ -1,4 +1,5 @@
 import json
+import math
 from typing import List
 from PyQt6.QtWidgets import QWidget, QToolTip
 from PyQt6.QtGui import QPainter, QColor, QKeyEvent, QPen
@@ -18,7 +19,12 @@ class MainPanel(QWidget):
             Qt.WindowType.FramelessWindowHint | Qt.WindowType.WindowStaysOnTopHint
         )
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
-        self.setGeometry(int(win_pos_x), int(win_pos_y), 600, 600)
+        self.setGeometry(
+            int(win_pos_x - cfg.window_size_half),
+            int(win_pos_y - cfg.window_size_half),
+            cfg.window_size,
+            cfg.window_size,
+        )
 
         # Activate mouse tracking for hover
         self.setMouseTracking(True)
@@ -62,28 +68,46 @@ class MainPanel(QWidget):
 
                 # Set text properties
                 painter.setPen(QColor("white"))  # Text color
-                # painter.setFont(QFont("Arial", 10)) # Optional: Set font
 
-                # Translate and rotate painter context
-                painter.translate(p.piece_data.get_center_pos())
-                painter.rotate(p.piece_data.get_angle())
+                # Get piece position and angle information
+                center_pos = p.piece_data.get_center_pos()
+                angle = p.piece_data.get_angle()
+
+                # Calculate text position adjustment based on layer index
+                # Inner layers need text positioned differently than outer layers
+                radial_offset = 0
+                if p.layer_index > 1:
+                    # Adjust radial offset based on layer index
+                    radial_offset = (p.layer_index - 1) * 20
+
+                # Calculate position along radial line
+                radian = math.radians(angle)
+                offset_x = math.cos(radian) * radial_offset
+                offset_y = math.sin(radian) * radial_offset
+
+                # Translate to the center of the piece
+                painter.translate(center_pos.x() + offset_x, center_pos.y() + offset_y)
+
+                # Adjust angle for text readability
+                adjusted_angle = angle
+                if angle > 90 and angle < 270:
+                    adjusted_angle += 180
+
+                painter.rotate(adjusted_angle)
 
                 # Draw text centered at the new origin (0,0)
                 font_metrics = painter.fontMetrics()
                 text_rect = font_metrics.boundingRect(p.title)
-                # Adjust x, y to center the text
                 text_x = -text_rect.width() / 2
-                # Adjust y for vertical centering (approximation)
-                text_y = font_metrics.ascent() / 2 - font_metrics.descent() / 2
+                text_y = text_rect.height() / 4  # Better vertical alignment
 
                 painter.drawText(int(text_x), int(text_y), p.title)
 
                 # Restore painter state
                 painter.restore()
 
-                # Reset pen for the border (important if text color was different)
-                # painter.setPen(pen)
-                print("çalışıyor")
+                # Reset pen for the border
+                painter.setPen(pen)
 
     def mouseMoveEvent(self, a0):
         """Fare hareketlerini takip et ve tooltip göster"""
@@ -132,6 +156,7 @@ class MainPanel(QWidget):
                         run_command(p.data)
                     elif p.type == Process_Type.KEYBOARD_SHORTCUT.name:
                         run_shortcut(p.data)
+        self.close()
 
     def keyPressEvent(self, a0: QKeyEvent):
         if a0.key() == Qt.Key.Key_Escape:

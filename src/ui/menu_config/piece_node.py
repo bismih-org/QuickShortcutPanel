@@ -53,17 +53,11 @@ class PieceNode:
         def update(node: "PieceNode", layer_index: int, piece_index: int):
             node.layer_index = layer_index
             node.piece_index = piece_index
-            if layer_index == 1:
-                cfg.piece_angle = 360 // len(root_node.children)
-                print(
-                    f"Layer: {layer_index}, Piece Angle: {cfg.piece_angle}, Piece Index: {piece_index}"
-                )
-            else:
-                cfg.piece_angle = tmp_piece_angle
+            cfg.piece_angle = 360 // len(root_node.children)
             node.piece_data = Piece(layer_index, piece_index)
 
             for i, child in enumerate(node.children):
-                update(child, layer_index + 1, i)
+                update(child, layer_index + 1, i + node.piece_index)
 
         update(root_node, 0, 0)
 
