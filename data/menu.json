@@ -11,14 +11,34 @@
         "id": 1,
         "type": "BASH_COMMAND",
         "description": "Birinci menü",
-        "data": []
+        "data": [
+          {
+            "command": "mkdir ~/kiraz",
+            "is_terminal": true
+          }
+        ]
       },
       {
-        "title": "menu 2",
+        "title": "zen",
         "id": 2,
         "type": "KEYBOARD_SHORTCUT",
         "description": "İkinci menü, alt öğeleri var",
-        "data": [],
+        "data": [
+          {
+            "ctrl": false,
+            "alt": false,
+            "shift": false,
+            "meta": false,
+            "key": "a"
+          },
+          {
+            "ctrl": false,
+            "alt": false,
+            "shift": false,
+            "meta": true,
+            "key": "f"
+          }
+        ],
         "children": [
           {
             "title": "menu 3",

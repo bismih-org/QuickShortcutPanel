@@ -3,11 +3,11 @@ from typing import List
 from PyQt6.QtWidgets import QWidget, QToolTip
 from PyQt6.QtGui import QPainter, QColor, QKeyEvent, QPen
 from PyQt6.QtCore import Qt, QEvent
-import yaml
 
-from src.ui.panel.piece import Piece
 from src.static.config import Configs as cfg
 from src.ui.menu_config.piece_node import PieceNode, build_tree
+from src.process.pro_types import Process_Type
+from src.process.runner import run_command, run_shortcut
 
 
 class MainPanel(QWidget):
@@ -42,7 +42,7 @@ class MainPanel(QWidget):
         PieceNode.update_layer_piece_index(self.root_node)
         print(self.root_node)
 
-    def paintEvent(self, event):
+    def paintEvent(self, a0):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
@@ -85,9 +85,9 @@ class MainPanel(QWidget):
                 # painter.setPen(pen)
                 print("çalışıyor")
 
-    def mouseMoveEvent(self, event):
+    def mouseMoveEvent(self, a0):
         """Fare hareketlerini takip et ve tooltip göster"""
-        pos = event.pos()
+        pos = a0.pos()
 
         # Önceki tooltip'i gizle
         if self.current_tooltip:
@@ -117,9 +117,9 @@ class MainPanel(QWidget):
             self.active_pieces_nodes.append(node)
         self.update()
 
-    def mousePressEvent(self, event):
+    def mousePressEvent(self, a0):
         """Tıklama olaylarını yakala"""
-        pos = event.pos()
+        pos = a0.pos()
 
         for pn in self.active_pieces_nodes:
             # İlk poligon (kırmızı iç, siyah kenar)
@@ -128,12 +128,16 @@ class MainPanel(QWidget):
                     pos, Qt.FillRule.OddEvenFill
                 ):
                     print(f"Clicked on {p.title}")
+                    if p.type == Process_Type.BASH_COMMAND.name:
+                        run_command(p.data)
+                    elif p.type == Process_Type.KEYBOARD_SHORTCUT.name:
+                        run_shortcut(p.data)
 
-    def keyPressEvent(self, event: QKeyEvent):
-        if event.key() == Qt.Key.Key_Escape:
+    def keyPressEvent(self, a0: QKeyEvent):
+        if a0.key() == Qt.Key.Key_Escape:
             self.close()
 
-    def event(self, event: QEvent):
-        if event.type() == QEvent.Type.WindowDeactivate:
+    def event(self, a0: QEvent):
+        if a0.type() == QEvent.Type.WindowDeactivate:
             self.close()
-        return super().event(event)
+        return super().event(a0)

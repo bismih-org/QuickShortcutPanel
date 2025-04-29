@@ -1,5 +1,6 @@
 import os
 
+
 class Paths:
     # HOME -> /home/user
     HOME = os.path.expanduser("~")
@@ -9,9 +10,9 @@ class Paths:
     menu_json_path = "data/menu.json"
 
     @classmethod
-    def file_check(self, path, reset=False):
+    def file_check(cls, path, reset=False):
         if not os.path.exists(path):
             os.makedirs(path)
         elif reset:
-            os.system("rm -rf "+path)
+            os.system("rm -rf " + path)
             os.makedirs(path)

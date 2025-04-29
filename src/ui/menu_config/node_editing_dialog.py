@@ -65,9 +65,9 @@ class NodeEditDialog(QDialog):
 
     def set_data(self):
         if self.cmb_type.currentText() == Process_Type.BASH_COMMAND.value:
-            dialog = CommandRunnerDialog()
+            dialog = CommandRunnerDialog(self.proc_data)
         elif self.cmb_type.currentText() == Process_Type.KEYBOARD_SHORTCUT.value:
-            dialog = ShortCutSelectorDialog()
+            dialog = ShortCutSelectorDialog(self.proc_data)
 
         if dialog.exec():
             data = dialog.get_data()
