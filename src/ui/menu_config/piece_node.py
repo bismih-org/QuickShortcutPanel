@@ -6,12 +6,11 @@ from src.ui.panel.piece import Piece
 
 class PieceNode:
     def __init__(
-        self, title: str, id_: int, type_: str, description: str, data: List[str]
+        self, title: str, id_: int, description: str, data: List[str]
     ):
 
         self.title = title
         self.id = id_
-        self.type = type_
         self.description = description
         self.data = data
         self.children: list[PieceNode] = []
@@ -36,7 +35,6 @@ class PieceNode:
         result = {
             "title": self.title,
             "id": self.id,
-            "type": self.type,
             "description": self.description,
             "data": self.data,
         }
@@ -76,7 +74,7 @@ class PieceNode:
 def build_tree(data):
     # Kök düğümü oluştur
     root = PieceNode(
-        data["title"], data["id"], data["type"], data["description"], data["data"]
+        data["title"], data["id"], data["description"], data["data"]
     )
 
     # Çocukları varsa işle
