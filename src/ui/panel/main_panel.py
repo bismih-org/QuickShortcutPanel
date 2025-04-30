@@ -7,8 +7,7 @@ from PyQt6.QtCore import Qt, QEvent
 
 from src.static.config import Configs as cfg
 from src.ui.menu_config.piece_node import PieceNode, build_tree
-from src.process.pro_types import Process_Type
-from src.process.runner import run_command, run_shortcut
+from src.process.runner import run_action
 
 
 class MainPanel(QWidget):
@@ -152,10 +151,7 @@ class MainPanel(QWidget):
                     pos, Qt.FillRule.OddEvenFill
                 ):
                     print(f"Clicked on {p.title}")
-                    if p.type == Process_Type.BASH_COMMAND.name:
-                        run_command(p.data)
-                    elif p.type == Process_Type.KEYBOARD_SHORTCUT.name:
-                        run_shortcut(p.data)
+                    run_action(p.data)
         self.close()
 
     def keyPressEvent(self, a0: QKeyEvent):

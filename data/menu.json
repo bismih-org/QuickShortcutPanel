@@ -6,125 +6,196 @@
     "data": [],
     "children": [
       {
-        "title": "menu 1",
-        "id": 1,
-        "description": "Birinci menü",
-        "data": []
-      },
-      {
-        "title": "zen",
-        "id": 2,
-        "description": "İkinci menü, alt öğeleri var",
+        "title": "Dosyalar",
+        "id": 18,
+        "description": "hızlıca dosyalara erişme",
         "data": [],
         "children": [
           {
-            "title": "menu 3",
-            "id": 3,
-            "description": "Üçüncü menü, menu 2 altında",
-            "data": []
-          }
-        ]
-      },
-      {
-        "title": "menu 5",
-        "id": 5,
-        "description": "Beşinci menü, alt öğeleri var",
-        "data": [],
-        "children": [
+            "title": "Projeler",
+            "id": 19,
+            "description": "proje dossyası",
+            "data": [
+              {
+                "type": "BASH_COMMAND",
+                "data": {
+                  "command": "dolphin /mnt/nvme0n1p1/projelerimiz2",
+                  "is_terminal": false
+                }
+              }
+            ]
+          },
           {
-            "title": "menu 6",
-            "id": 6,
-            "description": "Alt menü 6, kendi altında başka öğeler var",
-            "data": [],
-            "children": [
+            "title": "Yazılım",
+            "id": 20,
+            "description": "Yazılım klasörü",
+            "data": [
               {
-                "title": "erik",
-                "id": 9,
-                "description": "Erik kategorisi, altında başka öğeler var",
-                "data": [],
-                "children": [
-                  {
-                    "title": "elma",
-                    "id": 10,
-                    "description": "Erik altında bir salatalık öğesi",
-                    "data": []
-                  }
-                ]
-              },
-              {
-                "title": "düzenle",
-                "id": 12,
-                "description": "",
-                "data": []
-              },
-              {
-                "title": "kapat",
-                "id": 13,
-                "description": "",
-                "data": []
+                "type": "BASH_COMMAND",
+                "data": {
+                  "command": "dolphin /mnt/nvme0n1p1/projelerimiz2/yazilim/",
+                  "is_terminal": false
+                }
               }
             ]
           }
         ]
       },
       {
-        "title": "menu 4",
+        "title": "Uygulama",
         "id": 4,
-        "description": "Dördüncü menü, birden fazla alt öğeye sahip",
+        "description": "a",
         "data": [],
         "children": [
           {
-            "title": "kiraz2",
-            "id": 7,
-            "description": "Kiraz öğesi2",
-            "data": []
+            "title": "Yazılım",
+            "id": 5,
+            "description": "yazılım ortamı",
+            "data": [
+              {
+                "type": "KEYBOARD_SHORTCUT",
+                "data": {
+                  "ctrl": false,
+                  "alt": false,
+                  "shift": false,
+                  "meta": true,
+                  "key": "F"
+                }
+              },
+              {
+                "type": "BASH_COMMAND",
+                "data": {
+                  "command": "code",
+                  "is_terminal": false
+                }
+              }
+            ]
           },
           {
-            "title": "muz",
+            "title": "haberleşme",
+            "id": 6,
+            "description": "hızlıca habrleşmeyi aç",
+            "data": [
+              {
+                "type": "BASH_COMMAND",
+                "data": {
+                  "command": "zoom &",
+                  "is_terminal": false
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Link",
+        "id": 7,
+        "description": "Hızlıca linklere eriş",
+        "data": [],
+        "children": [
+          {
+            "title": "Okul",
             "id": 8,
-            "description": "Muz öğesi",
-            "data": []
-          },
+            "description": "Porje için hızlı lınkler",
+            "data": [
+              {
+                "type": "BASH_COMMAND",
+                "data": {
+                  "command": "chromium https://opac.fsm.edu.tr/vetisbt/ https://typst.app/ https://www.notion.so/",
+                  "is_terminal": false
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Özel eklentiler",
+        "id": 9,
+        "description": "",
+        "data": [],
+        "children": [
           {
-            "title": "kavun",
-            "id": 11,
-            "description": "a",
-            "data": []
-          },
+            "title": "Çeviri",
+            "id": 10,
+            "description": "Seçili metni çevirme",
+            "data": [
+              {
+                "type": "KEYBOARD_SHORTCUT",
+                "data": {
+                  "ctrl": true,
+                  "alt": false,
+                  "shift": true,
+                  "meta": false,
+                  "key": "J"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "test",
+        "id": 11,
+        "description": "test",
+        "data": [],
+        "children": [
           {
-            "title": "nar",
-            "id": 14,
+            "title": "test1.1",
+            "id": 12,
             "description": "",
             "data": [],
             "children": [
               {
-                "title": "vişne",
+                "title": "test2.1",
                 "id": 16,
-                "description": "meyve",
-                "data": [
+                "description": "",
+                "data": []
+              },
+              {
+                "title": "test2.2",
+                "id": 17,
+                "description": "",
+                "data": []
+              },
+              {
+                "title": "test2.3",
+                "id": 18,
+                "description": "",
+                "data": [],
+                "children": [
                   {
-                    "type": "BASH_COMMAND",
-                    "data": {
-                      "command": "code",
-                      "is_terminal": true
-                    }
-                  },
-                  {
-                    "type": "KEYBOARD_SHORTCUT",
-                    "data": {
-                      "ctrl": false,
-                      "alt": false,
-                      "shift": false,
-                      "meta": true,
-                      "key": "F"
-                    }
+                    "title": "test3.1",
+                    "id": 19,
+                    "description": "",
+                    "data": []
                   }
                 ]
               }
             ]
           },
           {
-            "title": "ezderha meyvesi",
+            "title": "test1.2",
+            "id": 13,
+            "description": "",
+            "data": [],
+            "children": [
+              {
+                "title": "test2.1",
+                "id": 20,
+                "description": "",
+                "data": []
+              }
+            ]
+          },
+          {
+            "title": "test1.3",
+            "id": 14,
+            "description": "",
+            "data": []
+          },
+          {
+            "title": "test1.4",
             "id": 15,
             "description": "",
             "data": []

@@ -5,6 +5,7 @@ class Process_Type(Enum):
     SPACIAL_PLUGINS = "Özel eklentiler"
     KEYBOARD_SHORTCUT = "Klavye kısayolu"
     BASH_COMMAND = "Bash Komutu"
+    OPEN_LINK = "Link aç"
     RUN_APP = "Uygulama çalıştır"
 
     @classmethod
