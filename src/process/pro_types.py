@@ -2,7 +2,6 @@ from enum import Enum
 
 
 class Process_Type(Enum):
-    MENU_ITEM_GROUP = "Menü öğesi grubu"
     SPACIAL_PLUGINS = "Özel eklentiler"
     KEYBOARD_SHORTCUT = "Klavye kısayolu"
     BASH_COMMAND = "Bash Komutu"

@@ -11,9 +11,8 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import Qt
 import json
 
-from src.process.pro_types import Process_Type
 from src.ui.menu_config.piece_node import build_tree, PieceNode
-from src.ui.menu_config.node_editing_dialog import NodeEditDialog
+from src.ui.menu_config.process_ui.config_dialog import ConfigDialog
 from src.static.config import Configs as cfg
 
 
@@ -42,8 +41,7 @@ class ConfigPanel(QMainWindow):
         self.main_layout = QHBoxLayout(self.central_widget)
 
         self.tree_widget = QTreeWidget()
-        self.tree_widget.setHeaderLabels(["Menü", "ID", "Açıklama", "Tür", "Veri"])
-        self.tree_widget.itemSelectionChanged.connect(self.on_item_selected)
+        self.tree_widget.setHeaderLabels(["Menü", "ID", "Açıklama", "Veri"])
         self.tree_widget.setColumnWidth(0, 200)
         self.tree_widget.setColumnWidth(1, 50)
         self.tree_widget.setMinimumWidth(300)
@@ -76,10 +74,6 @@ class ConfigPanel(QMainWindow):
 
         self.main_layout.addLayout(self.button_layout)
 
-    def on_item_selected(self):
-        is_selected = len(self.tree_widget.selectedItems()) > 0
-        print(is_selected)
-
     def add_child_node(self):
         selected_items = self.tree_widget.selectedItems()
 
@@ -89,7 +83,7 @@ class ConfigPanel(QMainWindow):
 
         selected_item = selected_items[0]
         parent_node = selected_item.data(0, Qt.ItemDataRole.UserRole)
-        dialog = NodeEditDialog(parent=self)
+        dialog = ConfigDialog(parent=self)
 
         if dialog.exec():
             node_data = dialog.get_data()
@@ -100,7 +94,6 @@ class ConfigPanel(QMainWindow):
             new_node = PieceNode(
                 node_data["title"],
                 self.menu_count,
-                node_data["type"],
                 node_data["description"],
                 node_data["data"],
             )
@@ -121,10 +114,9 @@ class ConfigPanel(QMainWindow):
         selected_item = selected_items[0]
         node = selected_item.data(0, Qt.ItemDataRole.UserRole)
 
-        dialog = NodeEditDialog(
-            node.title,
-            node.type,
-            node.description,
+        dialog = ConfigDialog(
+            title=node.title,
+            description=node.description,
             proc_data=node.data,
             parent=self,
         )
@@ -133,7 +125,6 @@ class ConfigPanel(QMainWindow):
 
             # Düğümü güncelle
             node.title = node_data["title"]
-            node.type = node_data["type"]
             node.description = node_data["description"]
             node.data = node_data["data"]
 
@@ -196,8 +187,7 @@ class ConfigPanel(QMainWindow):
         new_item.setText(0, node.title)
         new_item.setText(1, str(node.id))
         new_item.setText(2, node.description)
-        new_item.setText(3, Process_Type.get_name(node.type))
-        new_item.setText(4, str(node.data))
+        new_item.setText(3, str(node.data))
         new_item.setData(0, Qt.ItemDataRole.UserRole, node)
 
         return new_item

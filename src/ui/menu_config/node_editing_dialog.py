@@ -9,8 +9,7 @@ from PyQt6.QtWidgets import (
 )
 
 from src.process.pro_types import Process_Type
-from src.ui.menu_config.process_ui.command_runner_ui import CommandRunnerDialog
-from src.ui.menu_config.process_ui.short_cut_selector import ShortCutSelectorDialog
+
 
 
 class NodeEditDialog(QDialog):

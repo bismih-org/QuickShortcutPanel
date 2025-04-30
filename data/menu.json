@@ -2,48 +2,24 @@
   {
     "title": "root",
     "id": 0,
-    "type": "KEYBOARD_SHORTCUT",
     "description": "Kök dizin",
     "data": [],
     "children": [
       {
         "title": "menu 1",
         "id": 1,
-        "type": "BASH_COMMAND",
         "description": "Birinci menü",
-        "data": [
-          {
-            "command": "mkdir ~/kiraz",
-            "is_terminal": true
-          }
-        ]
+        "data": []
       },
       {
         "title": "zen",
         "id": 2,
-        "type": "KEYBOARD_SHORTCUT",
         "description": "İkinci menü, alt öğeleri var",
-        "data": [
-          {
-            "ctrl": false,
-            "alt": false,
-            "shift": false,
-            "meta": false,
-            "key": "a"
-          },
-          {
-            "ctrl": false,
-            "alt": false,
-            "shift": false,
-            "meta": true,
-            "key": "f"
-          }
-        ],
+        "data": [],
         "children": [
           {
             "title": "menu 3",
             "id": 3,
-            "type": "BASH_COMMAND",
             "description": "Üçüncü menü, menu 2 altında",
             "data": []
           }
@@ -52,32 +28,40 @@
       {
         "title": "menu 5",
         "id": 5,
-        "type": "KEYBOARD_SHORTCUT",
         "description": "Beşinci menü, alt öğeleri var",
         "data": [],
         "children": [
           {
             "title": "menu 6",
             "id": 6,
-            "type": "KEYBOARD_SHORTCUT",
             "description": "Alt menü 6, kendi altında başka öğeler var",
             "data": [],
             "children": [
               {
                 "title": "erik",
                 "id": 9,
-                "type": "KEYBOARD_SHORTCUT",
                 "description": "Erik kategorisi, altında başka öğeler var",
                 "data": [],
                 "children": [
                   {
-                    "title": "salatalık",
+                    "title": "elma",
                     "id": 10,
-                    "type": "BASH_COMMAND",
                     "description": "Erik altında bir salatalık öğesi",
                     "data": []
                   }
                 ]
+              },
+              {
+                "title": "düzenle",
+                "id": 12,
+                "description": "",
+                "data": []
+              },
+              {
+                "title": "kapat",
+                "id": 13,
+                "description": "",
+                "data": []
               }
             ]
           }
@@ -86,22 +70,63 @@
       {
         "title": "menu 4",
         "id": 4,
-        "type": "KEYBOARD_SHORTCUT",
         "description": "Dördüncü menü, birden fazla alt öğeye sahip",
         "data": [],
         "children": [
           {
             "title": "kiraz2",
             "id": 7,
-            "type": "BASH_COMMAND",
             "description": "Kiraz öğesi2",
             "data": []
           },
           {
             "title": "muz",
             "id": 8,
-            "type": "BASH_COMMAND",
             "description": "Muz öğesi",
+            "data": []
+          },
+          {
+            "title": "kavun",
+            "id": 11,
+            "description": "a",
+            "data": []
+          },
+          {
+            "title": "nar",
+            "id": 14,
+            "description": "",
+            "data": [],
+            "children": [
+              {
+                "title": "vişne",
+                "id": 16,
+                "description": "meyve",
+                "data": [
+                  {
+                    "type": "BASH_COMMAND",
+                    "data": {
+                      "command": "code",
+                      "is_terminal": true
+                    }
+                  },
+                  {
+                    "type": "KEYBOARD_SHORTCUT",
+                    "data": {
+                      "ctrl": false,
+                      "alt": false,
+                      "shift": false,
+                      "meta": true,
+                      "key": "F"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "title": "ezderha meyvesi",
+            "id": 15,
+            "description": "",
             "data": []
           }
         ]
