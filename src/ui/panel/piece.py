@@ -8,7 +8,7 @@ import math
 
 class Piece:
     def __init__(
-        self, layer_index, piece_index, text: str = "", sub_pieces: List["Piece"] = None
+        self, layer_index, piece_index, text: str = "", piece_angle: int = 90
     ):
         self.coordinate_list: List[QPoint] = []
         self.layer_index: int = layer_index
@@ -16,6 +16,7 @@ class Piece:
         self.angle_spacing = 1
         self.text = text
         self.text_angle = 0
+        self.piece_angle = piece_angle
 
         self._set_coordinate()
         poly = self.get_poligon()
@@ -27,7 +28,7 @@ class Piece:
         radius = cfg.piece_k * (radius_factor * cfg.piece_radius)
 
         # Parça açısı ve yay üzerindeki konumu hesapla
-        base_angle = self.piece_index * cfg.piece_angle
+        base_angle = self.piece_index * self.piece_angle
         angle = base_angle + angle_offset
 
         radian = math.radians(angle)
@@ -38,8 +39,8 @@ class Piece:
 
     def _set_coordinate(self):
         # İç yay (başlangıç açısından bitiş açısına)
-        start_angle = self.piece_index * cfg.piece_angle
-        end_angle = (self.piece_index + 1) * cfg.piece_angle
+        start_angle = self.piece_index * self.piece_angle
+        end_angle = (self.piece_index + 1) * self.piece_angle
 
         self.text_angle = int((start_angle + end_angle) / 2)
 
