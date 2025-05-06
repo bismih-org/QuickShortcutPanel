@@ -2,7 +2,7 @@ import json
 import math
 from typing import List
 from PyQt6.QtWidgets import QWidget, QToolTip
-from PyQt6.QtGui import QPainter, QColor, QKeyEvent, QPen
+from PyQt6.QtGui import QPainter, QKeyEvent, QPen, QBrush
 from PyQt6.QtCore import Qt, QEvent
 
 from src.static.config import Configs as cfg
@@ -33,6 +33,7 @@ class MainPanel(QWidget):
 
         # set first tooltip position
         self.current_tooltip = None
+        self.hover_node = None  # Fare üzerinde olan parça
 
         self.init_variables()
 
@@ -51,29 +52,34 @@ class MainPanel(QWidget):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
-        # Siyah kenar kalemi
-        pen = QPen(QColor("black"))
-        pen.setWidth(3)  # Kenar kalınlığı
+        # Kenar kalemi
+        pen = QPen(cfg.THEME_COLORS["border"])
+        pen.setWidth(2)  # Kenar kalınlığı
         painter.setPen(pen)
 
         for pn in self.active_pieces_nodes:
-            # İlk poligon (kırmızı iç, siyah kenar)
             for p in pn.children:
-                painter.setBrush(QColor("red"))
+                # Dolgu rengini belirle (hover, active veya normal)
+                if self.hover_node == p:
+                    painter.setBrush(QBrush(cfg.THEME_COLORS["hover"]))
+                elif p == self.active_node and p.layer_index > 0:
+                    painter.setBrush(QBrush(cfg.THEME_COLORS["active"]))
+                else:
+                    painter.setBrush(QBrush(cfg.THEME_COLORS["normal"]))
+
                 painter.drawPolygon(p.piece_data.get_poligon())
+
                 # --- Add text ---
-                # Save painter state
                 painter.save()
 
                 # Set text properties
-                painter.setPen(QColor("white"))  # Text color
+                painter.setPen(cfg.THEME_COLORS["text"])  # Text color
 
                 # Get piece position and angle information
                 center_pos = p.piece_data.get_center_pos()
                 angle = p.piece_data.get_angle()
 
                 # Calculate text position adjustment based on layer index
-                # Inner layers need text positioned differently than outer layers
                 radial_offset = 0
                 if p.layer_index > 1:
                     # Adjust radial offset based on layer index
@@ -111,7 +117,8 @@ class MainPanel(QWidget):
     def mouseMoveEvent(self, a0):
         """Fare hareketlerini takip et ve tooltip göster"""
         pos = a0.pos()
-
+        old_hover = self.hover_node
+        self.hover_node = None
         # Önceki tooltip'i gizle
         if self.current_tooltip:
             QToolTip.hideText()
@@ -126,8 +133,12 @@ class MainPanel(QWidget):
                     QToolTip.showText(self.mapToGlobal(pos), p.title, self)
                     self.current_tooltip = p.title
                     self.active_node = p
+                    self.hover_node = p
                     self.active_node_list_control(p)
                     break
+
+        if old_hover != self.hover_node:
+            self.update()
 
     def active_node_list_control(self, node: PieceNode):
         """Aktif node listesini kontrol et ve ekle"""

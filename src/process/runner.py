@@ -5,15 +5,15 @@ from src.process.pro_types import Process_Type
 
 
 def run_action(data):
-    for a in data:
-        if a["type"] == Process_Type.BASH_COMMAND.name:
-            thread = threading.Thread(target=run_command, args=(a["data"],))
+    for action in data:
+        if action["type"] == Process_Type.BASH_COMMAND.name:
+            thread = threading.Thread(target=run_command, args=(action["data"],))
             thread.daemon = False
             thread.start()
-        elif a["type"] == Process_Type.KEYBOARD_SHORTCUT.name:
-            run_shortcut(a["data"])
+        elif action["type"] == Process_Type.KEYBOARD_SHORTCUT.name:
+            run_shortcut(action["data"])
         else:
-            print(f"Unknown action type: {a['type']}")
+            print(f"Unknown action type: {action['type']}")
 
 
 def run_command(data):
