@@ -9,6 +9,9 @@ class Paths:
     menu_yaml_path = "data/menu.yaml"
     menu_json_path = "data/menu.json"
 
+    prepared_plugin_path = "data/prepared_plugins"
+    spacial_plugin_path = "data/special_plugins"
+
     @classmethod
     def file_check(cls, path, reset=False):
         if not os.path.exists(path):

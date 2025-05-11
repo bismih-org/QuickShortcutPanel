@@ -14,7 +14,7 @@
           {
             "title": "Projeler",
             "id": 19,
-            "description": "proje dossyası",
+            "description": "proje dosyası",
             "data": [
               {
                 "type": "BASH_COMMAND",
@@ -106,6 +106,40 @@
                 }
               }
             ]
+          },
+          {
+            "title": "Deneme",
+            "id": 21,
+            "description": "aa",
+            "data": [
+              {
+                "type": "KEYBOARD_SHORTCUT",
+                "data": {
+                  "ctrl": false,
+                  "alt": false,
+                  "shift": false,
+                  "meta": true,
+                  "key": "E"
+                }
+              },
+              {
+                "type": "KEYBOARD_SHORTCUT",
+                "data": {
+                  "ctrl": false,
+                  "alt": false,
+                  "shift": false,
+                  "meta": true,
+                  "key": "F"
+                }
+              },
+              {
+                "type": "BASH_COMMAND",
+                "data": {
+                  "command": "code",
+                  "is_terminal": false
+                }
+              }
+            ]
           }
         ]
       },
@@ -138,7 +172,62 @@
         "title": "test",
         "id": 11,
         "description": "test",
-        "data": [],
+        "data": [
+          {
+            "type": "SPACIAL_PLUGINS",
+            "data": {
+              "data": {
+                "author": "Geliştirici",
+                "dependencies": {
+                  "apt": [
+                    "flatpak"
+                  ],
+                  "flatpak": [
+                    "com.github.wwmm.easyeffects"
+                  ]
+                },
+                "description": "Basit uygulama açıklaması.",
+                "license": "GPL-3.0",
+                "title": "Basit Uygulama",
+                "version": "1.0.0",
+                "website": "https://github.com/bismih-org"
+              },
+              "path": "data/special_plugins/basic_app"
+            }
+          },
+          {
+            "type": "KEYBOARD_SHORTCUT",
+            "data": {
+              "ctrl": false,
+              "alt": false,
+              "shift": false,
+              "meta": true,
+              "key": "E"
+            }
+          },
+          {
+            "type": "SPACIAL_PLUGINS",
+            "data": {
+              "data": {
+                "author": "Geliştirici",
+                "dependencies": {
+                  "apt": [
+                    "flatpak"
+                  ],
+                  "flatpak": [
+                    "com.github.wwmm.easyeffects"
+                  ]
+                },
+                "description": "Basit uygulama açıklaması.",
+                "license": "GPL-3.0",
+                "title": "Basit Uygulama",
+                "version": "1.0.0",
+                "website": "https://github.com/bismih-org"
+              },
+              "path": "data/special_plugins/basic_app"
+            }
+          }
+        ],
         "children": [
           {
             "title": "test1.1",
