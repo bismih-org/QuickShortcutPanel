@@ -1,0 +1,26 @@
+[
+    {
+        "type": "KEYBOARD_SHORTCUT",
+        "data": {
+            "ctrl": false,
+            "alt": false,
+            "shift": false,
+            "meta": false,
+            "key": "A"
+        }
+    },
+    {
+        "type": "BASH_COMMAND",
+        "data": {
+            "command": "code",
+            "is_terminal": false
+        }
+    },
+    {
+        "type": "BASH_COMMAND",
+        "data": {
+            "command": "dolphin",
+            "is_terminal": false
+        }
+    }
+]

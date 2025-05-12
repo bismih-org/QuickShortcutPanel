@@ -1,0 +1,17 @@
+{
+    "plg_mng_version": "0.1",
+    "title": "Basit Uygulama",
+    "description": "Basit uygulama açıklaması.",
+    "author": "Geliştirici",
+    "version": "1.0.0",
+    "website": "https://github.com/bismih-org",
+    "license": "GPL-3.0",
+    "dependencies": {
+        "apt": [
+            "flatpak"
+        ],
+        "flatpak": [
+            "com.github.wwmm.easyeffects"
+        ]
+    }
+}

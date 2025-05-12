@@ -1,0 +1,12 @@
+[
+    {
+        "type": "KEYBOARD_SHORTCUT",
+        "data": {
+            "ctrl": true,
+            "alt": false,
+            "shift": true,
+            "meta": false,
+            "key": "J"
+        }
+    }
+]

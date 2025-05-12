@@ -10,8 +10,8 @@ sudo apt install xdotool python3-pyqt6 python3-coloredlogs python3-yaml python3-
 # Yapılacaklar
 
 - [ ] Easyeffect ile hazır efekt uygulama
-- [ ] Aynı and birden çok uygulama açma
-- [ ] Belli kısayolları açma
+- [ x ] Aynı and birden çok uygulama açma
+- [ x ] Belli kısayolları açma
 - [ ] Otomatik rahatsız etme modu açma
 - [ ] Belli kısayolları pencere olarak gösterme
 - [ ] Çeviri uygulaması entegre etme
@@ -26,3 +26,5 @@ sudo apt install xdotool python3-pyqt6 python3-coloredlogs python3-yaml python3-
 - [ ] Başlangıçta temel tanıtım
 - [ ] Ayarlar kısmında config içindeki ayarları düzenleme
 
+- [ x ] Eklenti sistemi
+- [ ] Menü başlıkları yerine ikonlar

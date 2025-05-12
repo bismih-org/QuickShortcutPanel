@@ -14,7 +14,7 @@
           {
             "title": "Projeler",
             "id": 19,
-            "description": "proje dossyası",
+            "description": "proje dosyası",
             "data": [
               {
                 "type": "BASH_COMMAND",
@@ -106,6 +106,40 @@
                 }
               }
             ]
+          },
+          {
+            "title": "Deneme",
+            "id": 21,
+            "description": "aa",
+            "data": [
+              {
+                "type": "KEYBOARD_SHORTCUT",
+                "data": {
+                  "ctrl": false,
+                  "alt": false,
+                  "shift": false,
+                  "meta": true,
+                  "key": "E"
+                }
+              },
+              {
+                "type": "KEYBOARD_SHORTCUT",
+                "data": {
+                  "ctrl": false,
+                  "alt": false,
+                  "shift": false,
+                  "meta": true,
+                  "key": "F"
+                }
+              },
+              {
+                "type": "BASH_COMMAND",
+                "data": {
+                  "command": "code",
+                  "is_terminal": false
+                }
+              }
+            ]
           }
         ]
       },
@@ -138,7 +172,17 @@
         "title": "test",
         "id": 11,
         "description": "test",
-        "data": [],
+        "data": [
+          {
+            "type": "OPEN_LINK",
+            "data": {
+              "links": [
+                "https://forum.pardus.org.tr/",
+                "https://lms.fsm.edu.tr/login"
+              ]
+            }
+          }
+        ],
         "children": [
           {
             "title": "test1.1",
