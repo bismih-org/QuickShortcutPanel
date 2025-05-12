@@ -51,10 +51,9 @@ class LinkOpenerWidget(QWidget):
 
         self.load_links(data.get("links", "[]"))
 
-    def load_links(self, links: str):
+    def load_links(self, links):
         if not links:
             return
-        links = ast.literal_eval(links)
         self.lst_links.clear()
 
         for link in links:

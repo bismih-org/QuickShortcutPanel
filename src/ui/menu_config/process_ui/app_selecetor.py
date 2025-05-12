@@ -2,49 +2,53 @@ import os
 from xdg import DesktopEntry
 from PyQt6.QtWidgets import (
     QVBoxLayout,
-    QListWidget,
-    QListWidgetItem,
-    QDialog,
-    QDialogButtonBox,
+    QWidget,
+    QComboBox,
+    QLabel,
+    QCompleter,
 )
 from PyQt6.QtGui import QIcon
 from PyQt6.QtCore import QSize
+from PyQt6.QtCore import Qt
+
+from src.process.pro_types import Process_Type
 
 
-class AppMenuViewer(QDialog):
-    def __init__(self, data, parent=None):
-        super().__init__(parent)
-        self.setWindowTitle("Uygulama Seç")
-        self.resize(350, 550)
-        self.setMinimumSize(100, 100)
+class AppMenuViewer(QWidget):
+    def __init__(self, data={}):
+        super().__init__()
 
-        self.selected_index = 0
+        form_layout = QVBoxLayout()
+        lb_title = QLabel("Uygulama Seç")
+
         self.all_app = []
+        self.selected_app = None
+        self.cmb_apps = QComboBox()
+        self.cmb_apps.setIconSize(QSize(32, 32))
+        self.editable_combo(self.cmb_apps)
 
-        self.app_list = QListWidget()
-        self.app_list.setIconSize(QSize(32, 32))
-        self.app_list.setAlternatingRowColors(True)
-        self.app_list.setSelectionMode(QListWidget.SelectionMode.SingleSelection)
-        self.app_list.itemClicked.connect(self.on_item_clicked)
-
-        # Butonlar
-        button_box = QDialogButtonBox(
-            QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
-        )
-        button_box.accepted.connect(self.accept)
-        button_box.rejected.connect(self.reject)
+        form_layout.addWidget(lb_title)
+        form_layout.addWidget(self.cmb_apps)
 
         main_layout = QVBoxLayout()
-        main_layout.addWidget(self.app_list)
-        main_layout.addWidget(button_box)
+        main_layout.addLayout(form_layout)
 
         self.setLayout(main_layout)
-        self.load_applications()
+        self.load_apps_to_cmb()
+        self.load_app(data)
 
-    def on_item_clicked(self, item):
-        self.selected_index = self.app_list.row(item)
+    def editable_combo(self, cmb):
+        cmb.setEditable(True)
+        completer = QCompleter(cmb.model(), self)
+        completer.setFilterMode(
+            Qt.MatchFlag.MatchContains
+        )  # Klavyeden yazılan kısmın elemanların herhangi bir yerinde geçmesi için
+        completer.setCaseSensitivity(
+            Qt.CaseSensitivity.CaseInsensitive
+        )  # Büyük küçük harf hassasiyetini kapatarak aramayı yapar
+        cmb.setCompleter(completer)
 
-    def load_applications(self):
+    def load_apps_to_cmb(self):
         desktop_dir = "/usr/share/applications/"
         for filename in os.listdir(desktop_dir):
             if filename.endswith(".desktop"):
@@ -52,21 +56,39 @@ class AppMenuViewer(QDialog):
                 try:
                     entry = DesktopEntry.DesktopEntry(file_path)
                     if not entry.getHidden() and entry.getName() and entry.getExec():
-                        item = QListWidgetItem(f"{entry.getName()}")
+                        item = f"{entry.getName()}"
                         self.all_app.append([entry.getName(), entry.getExec()])
                         icon_name = entry.getIcon()
-                        item.setIcon(
+                        self.cmb_apps.addItem(
                             QIcon.fromTheme(
                                 icon_name,
-                                QIcon.fromTheme("application-x-executable"),
-                            )
+                                QIcon("data/icons/quick_shortcut_panel.png"),
+                            ),
+                            item,
                         )
-                        self.app_list.addItem(item)
                 except Exception as e:
                     print(f"Error loading {filename}: {e}")
 
+    def load_app(self, data):
+        if not data:
+            return
+        self.cmb_apps.clear()
+        self.load_apps_to_cmb()
+        app_name = data.get("name", "")
+        for i in range(self.cmb_apps.count()):
+            if self.cmb_apps.itemText(i) == app_name:
+                self.cmb_apps.setCurrentIndex(i)
+                break
+
     def get_data(self):
+        if self.cmb_apps.currentText() == "":
+            return None
+        app_name = self.cmb_apps.currentText()
+        app_exec = self.all_app[self.cmb_apps.currentIndex()][1]
         return {
-            "selected_app": self.all_app[self.selected_index][0],
-            "selected_app_exec": self.all_app[self.selected_index][1],
+            "type": Process_Type.RUN_APP.name,
+            "data": {
+                "name": app_name,
+                "exec": app_exec,
+            },
         }

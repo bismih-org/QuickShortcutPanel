@@ -15,12 +15,21 @@ def run_action(data):
             run_shortcut(action["data"])
         elif action["type"] == Process_Type.OPEN_LINK.name:
             open_links(action["data"])
+        elif action["type"] == Process_Type.RUN_APP.name:
+            thread = threading.Thread(target=open_app, args=(action["data"],))
+            thread.daemon = False
+            thread.start()
         elif action["type"] == Process_Type.SPACIAL_PLUGINS.name:
             thread = threading.Thread(target=run_spacial_plugin, args=(action["data"],))
             thread.daemon = False
             thread.start()
         else:
             print(f"Unknown action type: {action['type']}")
+
+
+def open_app(data):
+    app_name = data["exec"]
+    run_command({"command": app_name, "is_terminal": False})
 
 
 def open_links(data):
@@ -62,7 +71,7 @@ def run_command(data):
         subprocess.Popen(
             f"konsole -e bash -c \"{command} && read -p 'Press Enter to continue...'\"",
             shell=True,
-            env=env
+            env=env,
         )
         return "Command launched in terminal"
     else:
