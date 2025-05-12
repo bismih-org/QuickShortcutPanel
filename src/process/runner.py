@@ -3,7 +3,6 @@ import subprocess
 import pyautogui
 import threading
 from src.process.pro_types import Process_Type
-from src.process.plugin_manager import run_plugin
 
 
 def run_action(data):
@@ -14,6 +13,8 @@ def run_action(data):
             thread.start()
         elif action["type"] == Process_Type.KEYBOARD_SHORTCUT.name:
             run_shortcut(action["data"])
+        elif action["type"] == Process_Type.OPEN_LINK.name:
+            open_links(action["data"])
         elif action["type"] == Process_Type.SPACIAL_PLUGINS.name:
             thread = threading.Thread(target=run_spacial_plugin, args=(action["data"],))
             thread.daemon = False
@@ -22,8 +23,17 @@ def run_action(data):
             print(f"Unknown action type: {action['type']}")
 
 
-# def run_spacial_plugin(data):
-#     run_plugin(data["path"])
+def open_links(data):
+    # xdg-open https://forum.pardus.org.tr/ & xdg-open https://lms.fsm.edu.tr/login &
+    print(type(data["links"]))
+    links = data["links"]
+    if not links:
+        return
+    open_links = ""
+    for link in links:
+        open_links += f"xdg-open {link} & "
+
+    run_command({"command": open_links, "is_terminal": False})
 
 
 def run_spacial_plugin(data):
@@ -43,16 +53,21 @@ def run_command(data):
     command: str = data["command"]
     is_on_terminal: bool = data["is_terminal"]
     print(f"Command: {command} is_terminal: {is_on_terminal}")
+    env = os.environ.copy()
+    env.pop("QT_QPA_PLATFORM_PLUGIN_PATH", None)
+    env.pop("QT_PLUGIN_PATH", None)
+    env.pop("QT_API", None)
     if is_on_terminal:
         # Run in terminal
         subprocess.Popen(
             f"konsole -e bash -c \"{command} && read -p 'Press Enter to continue...'\"",
             shell=True,
+            env=env
         )
         return "Command launched in terminal"
     else:
         try:
-            _ = subprocess.run(command, shell=True, check=True, text=True)
+            _ = subprocess.run(command, shell=True, env=env, check=True, text=True)
         except subprocess.CalledProcessError as e:
             return f"Error: {e.stderr}"
 

@@ -15,6 +15,7 @@ from src.process.pro_types import Process_Type
 from src.ui.menu_config.process_ui.command_runner_ui import CommandRunnerWidget
 from src.ui.menu_config.process_ui.short_cut_selector import ShortCutSelector
 from src.ui.menu_config.process_ui.spacial_plugin import SpacialPluginWidget
+from src.ui.menu_config.process_ui.link_opener import LinkOpenerWidget
 from src.process.plugin_manager import (
     get_plugins,
     save_plugin_data,
@@ -129,6 +130,11 @@ class ConfigDialog(QDialog):
                 widget = ShortCutSelector()
             else:
                 widget = ShortCutSelector(data)
+        elif type_ == Process_Type.OPEN_LINK.name:
+            if data is None:
+                widget = LinkOpenerWidget()
+            else:
+                widget = LinkOpenerWidget(data)
         elif type_ == Process_Type.PREPARED_PLUGINS.name:
             self.load_data(self.cmb_plugins.currentData())
             return

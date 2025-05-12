@@ -174,57 +174,12 @@
         "description": "test",
         "data": [
           {
-            "type": "SPACIAL_PLUGINS",
+            "type": "OPEN_LINK",
             "data": {
-              "data": {
-                "author": "Geliştirici",
-                "dependencies": {
-                  "apt": [
-                    "flatpak"
-                  ],
-                  "flatpak": [
-                    "com.github.wwmm.easyeffects"
-                  ]
-                },
-                "description": "Basit uygulama açıklaması.",
-                "license": "GPL-3.0",
-                "title": "Basit Uygulama",
-                "version": "1.0.0",
-                "website": "https://github.com/bismih-org"
-              },
-              "path": "data/special_plugins/basic_app"
-            }
-          },
-          {
-            "type": "KEYBOARD_SHORTCUT",
-            "data": {
-              "ctrl": false,
-              "alt": false,
-              "shift": false,
-              "meta": true,
-              "key": "E"
-            }
-          },
-          {
-            "type": "SPACIAL_PLUGINS",
-            "data": {
-              "data": {
-                "author": "Geliştirici",
-                "dependencies": {
-                  "apt": [
-                    "flatpak"
-                  ],
-                  "flatpak": [
-                    "com.github.wwmm.easyeffects"
-                  ]
-                },
-                "description": "Basit uygulama açıklaması.",
-                "license": "GPL-3.0",
-                "title": "Basit Uygulama",
-                "version": "1.0.0",
-                "website": "https://github.com/bismih-org"
-              },
-              "path": "data/special_plugins/basic_app"
+              "links": [
+                "https://forum.pardus.org.tr/",
+                "https://lms.fsm.edu.tr/login"
+              ]
             }
           }
         ],
