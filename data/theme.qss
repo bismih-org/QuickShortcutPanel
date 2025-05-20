@@ -1,0 +1,221 @@
+/* Ana Widget */
+QWidget {
+    background: ${MAIN_BG};
+    color: ${TEXT};
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    font-size: 13px;
+}
+
+/* TreeWidget */
+QTreeWidget {
+    background: ${SECONDARY_BG};
+    border: 1px solid ${BORDER};
+    border-radius: 6px;
+    alternate-background-color: ${ALTERNATE_ROW};
+    selection-background-color: ${SELECTION_BG};
+    selection-color: ${TEXT};
+    padding: 5px;
+    outline: none; /* Odak çerçevesini kaldırır */
+}
+
+QTreeWidget::item {
+    border-radius: 3px;
+    padding: 5px 2px;
+    margin: 2px 0;
+}
+
+QTreeWidget::item:selected {
+    background-color: ${SELECTION_BG};
+}
+
+/* TreeWidget dallarının görünümünü düzeltme */
+QTreeWidget::branch {
+    background-color: transparent;
+    border: none;
+}
+
+/* Dallar için ikonlar eklemek */
+QTreeWidget::branch:has-children:!has-siblings:closed,
+QTreeWidget::branch:closed:has-children:has-siblings {
+    image: url(:/icons/branch-closed.png);
+    border-image: none;
+    padding: 0;
+}
+
+QTreeWidget::branch:open:has-children:!has-siblings,
+QTreeWidget::branch:open:has-children:has-siblings {
+    image: url(:/icons/branch-open.png);
+    border-image: none;
+    padding: 0;
+}
+
+/* Kenar boşluğu ayarları */
+QTreeWidget::branch:has-children:!has-siblings,
+QTreeWidget::branch:has-siblings {
+    border-image: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Dal çizgileri ayarları */
+QTreeWidget::branch:has-siblings:adjoins-item {
+    border-image: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Başlıklar */
+QHeaderView::section {
+    background: ${DISABLED_BG};
+    border: none;
+    border-right: 1px solid ${BORDER};
+    border-bottom: 1px solid ${BORDER};
+    font-weight: bold;
+    padding: 8px 4px;
+}
+
+/* Düğmeler */
+QPushButton {
+    background: ${ACCENT};
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    margin: 4px 0;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+QPushButton:hover {
+    background: ${ACCENT_HOVER};
+}
+
+QPushButton:pressed {
+    background: ${ACCENT_PRESSED};
+}
+
+QPushButton:disabled {
+    background: ${DISABLED_BG};
+    color: ${DISABLED_TEXT};
+}
+
+/* Özel düğmeler */
+QPushButton#btn_save {
+    background: ${SAVE_BUTTON};
+}
+
+QPushButton#btn_add {
+    background: ${START_BUTTON};
+}
+
+QPushButton#btn_add:hover {
+    background: ${START_BUTTON_HOVER};
+}
+
+QPushButton#btn_delete {
+    background: ${STOP_BUTTON};
+}
+
+QPushButton#btn_delete:hover {
+    background: ${STOP_BUTTON_HOVER};
+}
+
+/* Checkboxlar - Karanlık temada daha belirgin yapıldı */
+QCheckBox {
+    color: ${TEXT};
+    spacing: 8px;
+}
+
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+}
+
+QCheckBox::indicator:unchecked {
+    border: 2px solid ${ACCENT};
+    background-color: ${SECONDARY_BG};
+}
+
+QCheckBox::indicator:checked {
+    border: 2px solid ${ACCENT};
+    background-color: ${ACCENT};
+    image: url(:/icons/check-white.png);  /* Beyaz bir tik işareti göster */
+}
+
+QCheckBox::indicator:unchecked:hover {
+    border: 2px solid ${ACCENT_HOVER};
+}
+
+QCheckBox::indicator:checked:hover {
+    background-color: ${ACCENT_HOVER};
+    border: 2px solid ${ACCENT_HOVER};
+}
+
+/* İletişim kutuları */
+QMessageBox {
+    background: ${MAIN_BG};
+}
+
+QDialog {
+    background: ${MAIN_BG};
+}
+
+/* Metin girişi */
+QLineEdit, QTextEdit {
+    background: ${SECONDARY_BG};
+    border: 1px solid ${BORDER};
+    border-radius: 4px;
+    padding: 6px;
+    color: ${TEXT};
+}
+
+QLineEdit:focus, QTextEdit:focus {
+    border: 1px solid ${ACCENT};
+}
+
+/* Combobox */
+QComboBox {
+    background: ${SECONDARY_BG};
+    border: 1px solid ${BORDER};
+    border-radius: 4px;
+    padding: 6px;
+    color: ${TEXT};
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: center right;
+    width: 24px;
+    border-left: none;
+}
+
+QComboBox QAbstractItemView {
+    background: ${SECONDARY_BG};
+    border: 1px solid ${BORDER};
+    selection-background-color: ${SELECTION_BG};
+}
+
+/* Kaydırma Çubukları */
+QScrollBar:vertical {
+    background: ${MAIN_BG};
+    width: 10px;
+    margin: 0;
+}
+
+QScrollBar::handle:vertical {
+    background: ${BORDER};
+    min-height: 30px;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: ${ACCENT};
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0;
+    background: none;
+}

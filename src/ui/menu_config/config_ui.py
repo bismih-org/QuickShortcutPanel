@@ -23,7 +23,7 @@ class ConfigPanel(QMainWindow):
         self.setWindowTitle("Menu Configurator")
         self.setGeometry(100, 100, 800, 500)
         self.theme_manager = ThemeManager()
-        self.theme_manager.apply_theme(dark_mode=False)  # Aydınlık tema başlangıçta
+        self.theme_manager.apply_theme(dark_mode=True)  # Aydınlık tema başlangıçta
 
         self.init_variables()
         self.main_ui()
@@ -130,6 +130,7 @@ class ConfigPanel(QMainWindow):
 
             selected_item.addChild(new_item)  # Add item to the tree view
             selected_item.setExpanded(True)
+            self.save_json()
 
     def edit_child_node(self):
         selected_items = self.tree_widget.selectedItems()
@@ -156,6 +157,7 @@ class ConfigPanel(QMainWindow):
             # Görünümü güncelle
             self.node_on_tree(node, selected_item)
             selected_item.setExpanded(True)
+            self.save_json()
 
     def delete_child_node(self):
         selected_items = self.tree_widget.selectedItems()
