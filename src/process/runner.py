@@ -33,8 +33,6 @@ def open_app(data):
 
 
 def open_links(data):
-    # xdg-open https://forum.pardus.org.tr/ & xdg-open https://lms.fsm.edu.tr/login &
-    print(type(data["links"]))
     links = data["links"]
     if not links:
         return

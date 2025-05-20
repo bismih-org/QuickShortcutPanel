@@ -14,6 +14,7 @@ import json
 from src.ui.menu_config.piece_node import build_tree, PieceNode
 from src.ui.menu_config.process_ui.config_dialog import ConfigDialog
 from src.static.config import Configs as cfg
+from src.ui.theme.theme_manager import ThemeManager
 
 
 class ConfigPanel(QMainWindow):
@@ -21,6 +22,8 @@ class ConfigPanel(QMainWindow):
         super().__init__()
         self.setWindowTitle("Menu Configurator")
         self.setGeometry(100, 100, 800, 500)
+        self.theme_manager = ThemeManager()
+        self.theme_manager.apply_theme(dark_mode=False)  # Aydınlık tema başlangıçta
 
         self.init_variables()
         self.main_ui()
@@ -61,6 +64,14 @@ class ConfigPanel(QMainWindow):
         self.btn_edit = QPushButton("Menü Düzenle")
         self.btn_delete = QPushButton("Menü Sil")
         self.btn_save = QPushButton("Kaydet")
+        
+        # Tema değiştirme
+        self.btn_toggle_theme = QPushButton()
+        self.btn_toggle_theme.setObjectName("btn_toggle_theme")
+        # Tema düğmesinin metnini güncelle
+        self._update_theme_button_text()
+        self.btn_toggle_theme.clicked.connect(self.toggle_theme)
+
 
         self.btn_add.clicked.connect(self.add_child_node)
         self.btn_edit.clicked.connect(self.edit_child_node)
@@ -71,8 +82,22 @@ class ConfigPanel(QMainWindow):
         self.button_layout.addWidget(self.btn_edit)
         self.button_layout.addWidget(self.btn_delete)
         self.button_layout.addWidget(self.btn_save)
+        self.button_layout.addWidget(self.btn_toggle_theme)
 
         self.main_layout.addLayout(self.button_layout)
+
+    def _update_theme_button_text(self):
+        """Tema düğmesinin metnini günceller."""
+        is_dark = getattr(self.theme_manager, "is_dark_mode", True)
+        theme_text = "Aydınlık Tema" if is_dark else "Karanlık Tema"
+        self.btn_toggle_theme.setText(f"{theme_text}'ya Geç")
+
+
+    def toggle_theme(self):
+        """Aydınlık/karanlık tema arasında geçiş yap"""
+        is_dark = self.theme_manager.toggle_theme()
+        theme_text = "Aydınlık Tema" if is_dark else "Karanlık Tema"
+        self.btn_toggle_theme.setText(f"{theme_text}'ya Geç")
 
     def add_child_node(self):
         selected_items = self.tree_widget.selectedItems()

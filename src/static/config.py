@@ -18,10 +18,23 @@ class Configs:
 
 
     THEME_COLORS = {
-        "background": QColor(10, 10, 10, 230),  # Yarı saydam siyahımsı arka plan
-        "border": QColor(60, 60, 60),  # Daha yumuşak kenar çizgisi
-        "text": QColor(240, 240, 240),  # Hafif gri text, gözü yormaması için
-        "normal": QColor(45, 45, 45),  # Koyu gri normal parçalar
-        "hover": QColor(240, 160, 30),  # Canlı turuncu/amber hover efekti
-        "active": QColor(190, 120, 30),  # Daha koyu turuncu ton aktif parçalar için
+        # Ana renk paleti
+        "background": QColor(18, 18, 24),       # Koyu siyahımsı arka plan
+        "border": QColor(48, 48, 56),           # Yumuşak kenar çizgisi
+        "text": QColor(240, 240, 245),          # Hafif gri metin
+        "normal": QColor(30, 30, 38),           # Koyu gri normal parçalar
+        
+        # Vurgu renkleri - Ana kırmızı renk etrafında
+        "accent": QColor(194, 50, 50),          # Ana vurgu/aksan rengi (Kırmızı)
+        "hover": QColor(210, 65, 65),           # Hover durumu için daha açık kırmızı
+        "active": QColor(180, 40, 40),          # Active durumu için daha koyu kırmızı
+        
+        # Tamamlayıcı renkler
+        "success": QColor(46, 160, 110),        # Yeşil (başarı durumu) 
+        "warning": QColor(240, 140, 40),        # Turuncu (uyarı durumu)
+        "info": QColor(60, 130, 190),           # Mavi (bilgi durumu)
+        
+        # Eski renkler için geriye dönük uyumluluk
+        "unactive": QColor(70, 70, 80),         # Pasif durum
+        "same_layer": QColor(110, 80, 190),     # Aynı katman için mor tonları
     }

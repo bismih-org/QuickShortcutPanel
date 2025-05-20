@@ -36,6 +36,49 @@
                   "command": "dolphin /mnt/nvme0n1p1/projelerimiz2/yazilim/",
                   "is_terminal": false
                 }
+              },
+              {
+                "type": "RUN_APP",
+                "data": {
+                  "name": "Visual Studio Code",
+                  "exec": "/usr/share/code/code %F"
+                }
+              },
+              {
+                "type": "OPEN_LINK",
+                "data": {
+                  "links": [
+                    "https://github.com/",
+                    "https://forum.pardus.org.tr/"
+                  ]
+                }
+              },
+              {
+                "type": "KEYBOARD_SHORTCUT",
+                "data": {
+                  "ctrl": true,
+                  "alt": false,
+                  "shift": false,
+                  "meta": true,
+                  "key": "Right"
+                }
+              },
+              {
+                "type": "RUN_APP",
+                "data": {
+                  "name": "Konsole",
+                  "exec": "konsole"
+                }
+              },
+              {
+                "type": "KEYBOARD_SHORTCUT",
+                "data": {
+                  "ctrl": true,
+                  "alt": false,
+                  "shift": false,
+                  "meta": true,
+                  "key": "E"
+                }
               }
             ]
           }
