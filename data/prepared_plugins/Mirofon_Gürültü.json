@@ -1,0 +1,9 @@
+[
+    {
+        "type": "BASH_COMMAND",
+        "data": {
+            "command": "flatpak run com.github.wwmm.easyeffects -l in_noise",
+            "is_terminal": false
+        }
+    }
+]

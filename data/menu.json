@@ -297,6 +297,84 @@
             "data": []
           }
         ]
+      },
+      {
+        "title": "Ses",
+        "id": 23,
+        "description": "",
+        "data": [],
+        "children": [
+          {
+            "title": "Hoparlör Gürültü",
+            "id": 24,
+            "description": "Hoparlör gürültüyü engeller",
+            "data": [
+              {
+                "type": "BASH_COMMAND",
+                "data": {
+                  "command": "flatpak run com.github.wwmm.easyeffects -l noise_remove",
+                  "is_terminal": false
+                }
+              }
+            ]
+          },
+          {
+            "title": "Hoparlör Normal",
+            "id": 25,
+            "description": "Hoparlör normal hale getirir",
+            "data": [
+              {
+                "type": "BASH_COMMAND",
+                "data": {
+                  "command": "flatpak run com.github.wwmm.easyeffects -l normal",
+                  "is_terminal": false
+                }
+              }
+            ]
+          },
+          {
+            "title": "Hoparlör Eko",
+            "id": 26,
+            "description": "Hoparlerden gelen sese eko ekler",
+            "data": [
+              {
+                "type": "BASH_COMMAND",
+                "data": {
+                  "command": "flatpak run com.github.wwmm.easyeffects -l eko",
+                  "is_terminal": false
+                }
+              }
+            ]
+          },
+          {
+            "title": "Mirofon Gürültü",
+            "id": 26,
+            "description": "Mirofon gürültü engelleme",
+            "data": [
+              {
+                "type": "BASH_COMMAND",
+                "data": {
+                  "command": "flatpak run com.github.wwmm.easyeffects -l in_noise",
+                  "is_terminal": false
+                }
+              }
+            ]
+          },
+          {
+            "title": "Mikrofon Normal",
+            "id": 27,
+            "description": "Mikrofon normal hale getirme",
+            "data": [
+              {
+                "type": "BASH_COMMAND",
+                "data": {
+                  "command": "flatpak run com.github.wwmm.easyeffects -l in_normal",
+                  "is_terminal": false
+                }
+              }
+            ]
+          }
+        ]
       }
     ]
   }

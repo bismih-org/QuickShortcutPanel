@@ -6,44 +6,69 @@ from src.static.file_paths import Paths
 
 def get_plugins():
     plugins_with_data = []
+    Paths.file_check(Paths.prepared_plugin_path)
     for _, _, files in os.walk(Paths.prepared_plugin_path):
+        print("Plugins: ", files)
         for file in files:
             if file.endswith(".json"):
-                plug_name = file.strip(".json")
-                plug_data = get_plugin_data(plug_name)
-                plugins_with_data.append([plug_name, plug_data])
+                # strip() yerine replace() veya [:-5] kullanalım
+                plug_name = file[:-5]  # .json uzantısını kaldır (5 karakter)
+                # veya: plug_name = file.replace(".json", "")
+                
+                try:
+                    plug_data = get_plugin_data(plug_name)
+                    plugins_with_data.append([plug_name, plug_data])
+                except FileNotFoundError as e:
+                    print(f"Hata: {plug_name} dosyası açılamadı: {e}")
+                except json.JSONDecodeError as e:
+                    print(f"JSON hata: {plug_name} dosyası geçerli bir JSON değil: {e}")
+                except Exception as e:
+                    print(f"Beklenmeyen hata: {plug_name} dosyası için: {e}")
 
     return plugins_with_data
 
 
 def get_plugin_data(plugin_name):
-    with open(Paths.prepared_plugin_path + "/" + plugin_name + ".json", "r") as f:
+    # Dosya yolunu oluştururken os.path.join kullanmak daha güvenlidir
+    file_path = os.path.join(Paths.prepared_plugin_path, f"{plugin_name}.json")
+    
+    with open(file_path, "r", encoding="utf-8") as f:
         data = json.load(f)
     return data
 
 
 def save_plugin_data(plugin_name, data):
-    with open(Paths.prepared_plugin_path + "/" + plugin_name + ".json", "w") as f:
+    plugin_name = plugin_name.split(" ")
+    plugin_name = "_".join(plugin_name)
+    
+    # Dosya yolunu oluştururken os.path.join kullanmak daha güvenlidir
+    file_path = os.path.join(Paths.prepared_plugin_path, f"{plugin_name}.json")
+    
+    with open(file_path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
 
 
 def get_special_plugins():
     special_plugins = []
+    Paths.file_check(Paths.spacial_plugin_path)
     for root, _, files in os.walk(Paths.spacial_plugin_path):
         for file in files:
             if file.endswith(".json"):
-                data = get_special_plugins_data(os.path.join(root, file))
-                special_plugins.append(
-                    {
-                        "data": data,
-                        "path": root,
-                    }
-                )
+                try:
+                    data = get_special_plugins_data(os.path.join(root, file))
+                    special_plugins.append(
+                        {
+                            "data": data,
+                            "path": root,
+                        }
+                    )
+                except Exception as e:
+                    print(f"Hata: {file} dosyası işlenemedi: {e}")
 
     return special_plugins
 
 
 def get_special_plugins_data(file):
-    with open(file, "r") as f:
+    with open(file, "r", encoding="utf-8") as f:
         data = json.load(f)
     return data
