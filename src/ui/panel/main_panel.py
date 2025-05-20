@@ -1,5 +1,6 @@
 import json
 import math
+import time
 from typing import List
 from PyQt6.QtWidgets import QWidget, QToolTip
 from PyQt6.QtGui import QPainter, QKeyEvent, QPen, QBrush
@@ -48,11 +49,14 @@ class MainPanel(QWidget):
         PieceNode.update_layer_piece_index(self.root_node)
         print(self.root_node)
 
+        self.pending_node = None  # Bekleme süresindeki düğüm
+        self.hover_start_time = 0  # Hover'a başlama zamanı
+        self.hover_delay = 0.07  # Saniye cinsinden bekleme süresi
+
     def paintEvent(self, a0):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
-        # Kenar kalemi
         pen = QPen(cfg.THEME_COLORS["border"])
         pen.setWidth(2)  # Kenar kalınlığı
         painter.setPen(pen)
@@ -102,11 +106,24 @@ class MainPanel(QWidget):
 
                 # Draw text centered at the new origin (0,0)
                 font_metrics = painter.fontMetrics()
-                text_rect = font_metrics.boundingRect(p.title)
-                text_x = -text_rect.width() / 2
-                text_y = text_rect.height() / 4  # Better vertical alignment
 
-                painter.drawText(int(text_x), int(text_y), p.title)
+                words = p.title.split()
+                title = "\n".join(words)
+
+                text_rect = font_metrics.boundingRect(
+                    0, 0, 1000, 1000, Qt.TextFlag.TextWordWrap, title
+                )
+                text_x = -text_rect.width() / 2
+                text_y = -text_rect.height() / 2  # Metni dikey olarak da ortala
+
+                painter.drawText(
+                    int(text_x),
+                    int(text_y),
+                    text_rect.width(),
+                    text_rect.height(),
+                    Qt.TextFlag.TextJustificationForced,
+                    title,
+                )
 
                 # Restore painter state
                 painter.restore()
@@ -119,36 +136,61 @@ class MainPanel(QWidget):
         pos = a0.pos()
         old_hover = self.hover_node
         self.hover_node = None
-        # Önceki tooltip'i gizle
-        if self.current_tooltip:
-            QToolTip.hideText()
-            self.current_tooltip = None
 
+        # Fare pozisyonundaki parçayı bul
+        found_node = None
         for pn in self.active_pieces_nodes:
-            # İlk poligon (kırmızı iç, siyah kenar)
             for p in pn.children:
                 if p.piece_data.get_poligon().containsPoint(
                     pos, Qt.FillRule.OddEvenFill
                 ):
-                    QToolTip.showText(self.mapToGlobal(pos), p.title, self)
-                    self.current_tooltip = p.title
-                    self.active_node = p
+                    found_node = p
+                    # QToolTip.showText(self.mapToGlobal(pos), p.title, self)
+                    # self.current_tooltip = p.title
                     self.hover_node = p
-                    self.active_node_list_control(p)
                     break
+            if found_node:
+                break
 
+        # Hover değişikliği varsa
         if old_hover != self.hover_node:
+            # Hover'ı görsel olarak güncelleyin
             self.update()
+
+            if self.hover_node:
+                # Yeni bir hover başladıysa
+                if self.hover_node != self.pending_node:
+                    self.pending_node = self.hover_node
+                    self.hover_start_time = time.time()
+            else:
+                # Hover sona erdiyse
+                self.pending_node = None
+
+        # Bekleyen bir düğüm varsa ve yeterli süre geçtiyse aktif yap
+        current_time = time.time()
+        if (
+            self.pending_node
+            and current_time - self.hover_start_time >= self.hover_delay
+            and self.pending_node == self.hover_node
+        ):  # Hala aynı düğüm üzerindeyiz
+
+            self.active_node = self.pending_node
+            self.active_node_list_control(self.pending_node)
+            self.pending_node = None  # Bekleyen düğümü temizle
 
     def active_node_list_control(self, node: PieceNode):
         """Aktif node listesini kontrol et ve ekle"""
         print(f"Active node: {node.title}")
-        for n in self.active_pieces_nodes:
-            if n.layer_index >= self.active_node.layer_index:
-                self.active_pieces_nodes.remove(n)
-                break
+
+        # Mevcut katmandan daha yüksek veya eşit katmandaki tüm düğümleri kaldır
+        self.active_pieces_nodes = [
+            n for n in self.active_pieces_nodes if n.layer_index < node.layer_index
+        ]
+
+        # Yeni düğümü ekle
         if node not in self.active_pieces_nodes:
             self.active_pieces_nodes.append(node)
+
         self.update()
 
     def mousePressEvent(self, a0):

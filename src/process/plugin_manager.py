@@ -11,10 +11,8 @@ def get_plugins():
         print("Plugins: ", files)
         for file in files:
             if file.endswith(".json"):
-                # strip() yerine replace() veya [:-5] kullanalım
-                plug_name = file[:-5]  # .json uzantısını kaldır (5 karakter)
-                # veya: plug_name = file.replace(".json", "")
-                
+                plug_name = file[:-5]
+
                 try:
                     plug_data = get_plugin_data(plug_name)
                     plugins_with_data.append([plug_name, plug_data])
@@ -31,7 +29,7 @@ def get_plugins():
 def get_plugin_data(plugin_name):
     # Dosya yolunu oluştururken os.path.join kullanmak daha güvenlidir
     file_path = os.path.join(Paths.prepared_plugin_path, f"{plugin_name}.json")
-    
+
     with open(file_path, "r", encoding="utf-8") as f:
         data = json.load(f)
     return data
@@ -40,10 +38,10 @@ def get_plugin_data(plugin_name):
 def save_plugin_data(plugin_name, data):
     plugin_name = plugin_name.split(" ")
     plugin_name = "_".join(plugin_name)
-    
+
     # Dosya yolunu oluştururken os.path.join kullanmak daha güvenlidir
     file_path = os.path.join(Paths.prepared_plugin_path, f"{plugin_name}.json")
-    
+
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
 

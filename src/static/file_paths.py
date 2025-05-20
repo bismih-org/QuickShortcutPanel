@@ -9,6 +9,7 @@ class Paths:
     menu_yaml_path = "data/menu.yaml"
     menu_json_path = "data/menu.json"
 
+    HOME_PATH = os.path.expanduser("~")
     prepared_plugin_path = "data/prepared_plugins"
     spacial_plugin_path = "data/special_plugins"
 
