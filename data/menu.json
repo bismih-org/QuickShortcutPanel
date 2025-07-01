@@ -12,14 +12,14 @@
         "data": [],
         "children": [
           {
-            "title": "Projeler",
+            "title": "Ev",
             "id": 19,
-            "description": "proje dosyası",
+            "description": "Ev dosyası",
             "data": [
               {
                 "type": "BASH_COMMAND",
                 "data": {
-                  "command": "dolphin /mnt/nvme0n1p1/projelerimiz2",
+                  "command": "dolphin ~",
                   "is_terminal": false
                 }
               }
@@ -33,7 +33,7 @@
               {
                 "type": "BASH_COMMAND",
                 "data": {
-                  "command": "dolphin /mnt/nvme0n1p1/projelerimiz2/yazilim/",
+                  "command": "dolphin /usr/share/applications/",
                   "is_terminal": false
                 }
               },
@@ -244,15 +244,7 @@
         "title": "Ayar",
         "id": 11,
         "description": "test",
-        "data": [
-          {
-            "type": "BASH_COMMAND",
-            "data": {
-              "command": "/mnt/nvme0n1p1/projelerimiz2/yazilim/sistem/QuickShortcutPanel/quick-shortcut-panel-config",
-              "is_terminal": false
-            }
-          }
-        ],
+        "data": [],
         "children": [
           {
             "title": "test1.1",
