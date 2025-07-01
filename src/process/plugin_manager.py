@@ -6,8 +6,16 @@ from src.static.file_paths import Paths
 
 def get_plugins():
     plugins_with_data = []
-    Paths.file_check(Paths.prepared_plugin_path)
-    for _, _, files in os.walk(Paths.prepared_plugin_path):
+    Paths.file_check(
+        Paths.file_path_check_home(
+            Paths.home_prepared_plugin_path, Paths.prepared_plugin_path
+        )
+    )
+    for _, _, files in os.walk(
+        Paths.file_path_check_home(
+            Paths.home_prepared_plugin_path, Paths.prepared_plugin_path
+        )
+    ):
         print("Plugins: ", files)
         for file in files:
             if file.endswith(".json"):
@@ -28,7 +36,12 @@ def get_plugins():
 
 def get_plugin_data(plugin_name):
     # Dosya yolunu oluştururken os.path.join kullanmak daha güvenlidir
-    file_path = os.path.join(Paths.prepared_plugin_path, f"{plugin_name}.json")
+    file_path = os.path.join(
+        Paths.file_path_check_home(
+            Paths.home_prepared_plugin_path, Paths.prepared_plugin_path
+        ),
+        f"{plugin_name}.json",
+    )
 
     with open(file_path, "r", encoding="utf-8") as f:
         data = json.load(f)
@@ -40,7 +53,12 @@ def save_plugin_data(plugin_name, data):
     plugin_name = "_".join(plugin_name)
 
     # Dosya yolunu oluştururken os.path.join kullanmak daha güvenlidir
-    file_path = os.path.join(Paths.prepared_plugin_path, f"{plugin_name}.json")
+    file_path = os.path.join(
+        Paths.file_path_check_home(
+            Paths.home_prepared_plugin_path, Paths.prepared_plugin_path
+        ),
+        f"{plugin_name}.json",
+    )
 
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
@@ -48,8 +66,16 @@ def save_plugin_data(plugin_name, data):
 
 def get_special_plugins():
     special_plugins = []
-    Paths.file_check(Paths.spacial_plugin_path)
-    for root, _, files in os.walk(Paths.spacial_plugin_path):
+    Paths.file_check(
+        Paths.file_path_check_home(
+            Paths.home_spacial_plugin_path, Paths.spacial_plugin_path
+        )
+    )
+    for root, _, files in os.walk(
+        Paths.file_path_check_home(
+            Paths.home_spacial_plugin_path, Paths.spacial_plugin_path
+        )
+    ):
         for file in files:
             if file.endswith(".json"):
                 try:

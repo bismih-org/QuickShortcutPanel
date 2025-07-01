@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Quick Shortcut Panel
+Name[tr]=Hızlı Kısayol Panel
+Comment=Hızlı kısayol paneli
+Comment[tr]=Hızlı kısayol paneli
+Exec=quick-shortcut-panel
+Icon=quick-shortcut-panel
+Terminal=false
+Categories=Utility;
+Keywords=Quick;Shortcut;Panel;
+Keywords[tr]=Hızlı;Kısayol;Panel;

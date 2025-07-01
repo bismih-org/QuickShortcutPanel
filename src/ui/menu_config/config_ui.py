@@ -13,7 +13,7 @@ import json
 
 from src.ui.menu_config.piece_node import build_tree, PieceNode
 from src.ui.menu_config.process_ui.config_dialog import ConfigDialog
-from src.static.config import Configs as cfg
+from src.static.file_paths import Paths as path
 from src.ui.theme.theme_manager import ThemeManager
 
 
@@ -29,7 +29,9 @@ class ConfigPanel(QMainWindow):
         self.main_ui()
 
     def init_variables(self):
-        self.data_path = cfg.menu_json_path
+        self.data_path = (
+            path.file_path_check_home(path.home_menu_json_path, path.menu_json_path)
+        )
         with open(self.data_path, "r", encoding="utf-8") as f:
             data = json.load(f)
 
@@ -64,14 +66,13 @@ class ConfigPanel(QMainWindow):
         self.btn_edit = QPushButton("Menü Düzenle")
         self.btn_delete = QPushButton("Menü Sil")
         self.btn_save = QPushButton("Kaydet")
-        
+
         # Tema değiştirme
         self.btn_toggle_theme = QPushButton()
         self.btn_toggle_theme.setObjectName("btn_toggle_theme")
         # Tema düğmesinin metnini güncelle
         self._update_theme_button_text()
         self.btn_toggle_theme.clicked.connect(self.toggle_theme)
-
 
         self.btn_add.clicked.connect(self.add_child_node)
         self.btn_edit.clicked.connect(self.edit_child_node)
@@ -91,7 +92,6 @@ class ConfigPanel(QMainWindow):
         is_dark = getattr(self.theme_manager, "is_dark_mode", True)
         theme_text = "Aydınlık Tema" if is_dark else "Karanlık Tema"
         self.btn_toggle_theme.setText(f"{theme_text}'ya Geç")
-
 
     def toggle_theme(self):
         """Aydınlık/karanlık tema arasında geçiş yap"""

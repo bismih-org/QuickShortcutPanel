@@ -7,24 +7,22 @@ sudo apt install xdotool python3-pyqt6 python3-coloredlogs python3-yaml python3-
 
 ![alt text](doc/app.png)
 ![alt text](doc/setting.png)
-# Yapılacaklar
+## Bağımlılıklar
 
-- [ ] Easyeffect ile hazır efekt uygulama
-- [ x ] Aynı and birden çok uygulama açma
-- [ x ] Belli kısayolları açma
-- [ ] Otomatik rahatsız etme modu açma
-- [ ] Belli kısayolları pencere olarak gösterme
-- [ ] Çeviri uygulaması entegre etme
-- [ ] Dosya açıcı
-- [ ] Kde connect ile telefon bağlantısı
-- [ ] Scrcpy ile ekran paylaşımı
-- [ ] Site açma
-- [ ] En çok ram kullanan uygulamaları listeleyip kill etme
+`sudo apt install python3-serial python3-requests python3-coloredlogs python3-websockets usbutils`
 
+veya
 
+`pip install -r requirements.txt`
 
-- [ ] Başlangıçta temel tanıtım
-- [ ] Ayarlar kısmında config içindeki ayarları düzenleme
+# Çalıştırmak için
 
-- [ x ] Eklenti sistemi
-- [ ] Menü başlıkları yerine ikonlar
+`python3 Main.py`
+
+# Derlemek için
+
+```console
+sudo apt install devscripts git-buildpackage
+sudo mk-build-deps -ir
+gbp buildpackage --git-export-dir=/tmp/build/bismih-welcome -us -uc --git-ignore-branch --git-ignore-new
+```

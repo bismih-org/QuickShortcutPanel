@@ -1,0 +1,27 @@
+Source: quick-shortcut-panel
+Section: x11
+Priority: optional
+Maintainer: Muhammet Halak <halakmuhammet145@gmail.com>
+Build-Depends: debhelper-compat (= 13), dh-python, python3-all, python3-setuptools
+Standards-Version: 4.6.1
+Homepage: https://github.com/bismih-org/QuickShortcutPanel
+
+Package: quick-shortcut-panel
+Architecture: all
+Depends: ${misc:Depends},
+         ${python3:Depends},
+         gir1.2-ayatanaappindicator3-0.1,
+         gir1.2-glib-2.0,
+         gir1.2-gtk-3.0,
+         python3-bs4,
+         python3-aiohttp,
+         python3-pyqt6,
+         python3-coloredlogs,
+         python3-xdg
+Description: Quick Shortcut Panel
+ Quick Shortcut Panel is a simple application that provides a panel for quick access to
+ your favorite applications and shortcuts. It allows you to easily launch applications,
+ open files, and perform various actions with just a few clicks.
+ .
+ This package is designed to be lightweight and user-friendly, making it suitable for
+ users who want a convenient way to manage their shortcuts and applications.

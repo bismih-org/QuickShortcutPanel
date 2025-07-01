@@ -1,9 +1,12 @@
+import os
 from PyQt6.QtWidgets import QApplication
 import sys
+from PyQt6.QtGui import QIcon
+
+print(os.path.dirname(os.path.abspath(__file__)))
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 from src.ui.panel.main_panel import MainPanel
-from PyQt6.QtGui import QIcon
-import os
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

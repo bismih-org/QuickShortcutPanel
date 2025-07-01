@@ -7,6 +7,5 @@ xy=$(xdotool getmouselocation)
 x=$(echo $xy | awk '{print $1}' | awk -F: '{print $2}')
 y=$(echo $xy | awk '{print $2}' | awk -F: '{print $2}')
 
-echo $x $y
-
-python3 $location/main.py $x $y
+cd /usr/share/quickshortcutpanel/
+python3 main.py $x $y

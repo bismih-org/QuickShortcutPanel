@@ -1,0 +1,52 @@
+[
+    {
+        "type": "BASH_COMMAND",
+        "data": {
+            "command": "dolphin /mnt/nvme0n1p1/projelerimiz2/yazilim/",
+            "is_terminal": false
+        }
+    },
+    {
+        "type": "RUN_APP",
+        "data": {
+            "name": "scrcpy (console)",
+            "exec": "/bin/sh -c \"\\\\$SHELL -i -c 'scrcpy --pause-on-exit=if-error'\""
+        }
+    },
+    {
+        "type": "OPEN_LINK",
+        "data": {
+            "links": [
+                "https://github.com/",
+                "https://forum.pardus.org.tr/"
+            ]
+        }
+    },
+    {
+        "type": "KEYBOARD_SHORTCUT",
+        "data": {
+            "ctrl": true,
+            "alt": false,
+            "shift": false,
+            "meta": true,
+            "key": "Right"
+        }
+    },
+    {
+        "type": "RUN_APP",
+        "data": {
+            "name": "Konsole",
+            "exec": "konsole"
+        }
+    },
+    {
+        "type": "KEYBOARD_SHORTCUT",
+        "data": {
+            "ctrl": true,
+            "alt": false,
+            "shift": false,
+            "meta": true,
+            "key": "E"
+        }
+    }
+]

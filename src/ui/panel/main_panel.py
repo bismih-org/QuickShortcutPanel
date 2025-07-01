@@ -3,12 +3,14 @@ import math
 import time
 from typing import List
 from PyQt6.QtWidgets import QWidget, QToolTip
-from PyQt6.QtGui import QPainter, QKeyEvent, QPen, QBrush
+from PyQt6.QtGui import QColor, QPainter, QKeyEvent, QPen, QBrush
 from PyQt6.QtCore import Qt, QEvent
 
 from src.static.config import Configs as cfg
+from src.static.file_paths import Paths as path
 from src.ui.menu_config.piece_node import PieceNode, build_tree
 from src.process.runner import run_action
+from src.ui.theme.theme_manager import ThemeManager
 
 
 class MainPanel(QWidget):
@@ -42,7 +44,10 @@ class MainPanel(QWidget):
         self.active_node = self.root_node
 
     def init_variables(self):
-        with open(cfg.menu_json_path, "r", encoding="utf-8") as f:
+        p = path.file_path_check_home(
+            path.home_menu_json_path, path.menu_json_path
+        )
+        with open(p, "r", encoding="utf-8") as f:
             data = json.load(f)
 
         self.root_node = build_tree(data[0])
@@ -51,13 +56,17 @@ class MainPanel(QWidget):
 
         self.pending_node = None  # Bekleme süresindeki düğüm
         self.hover_start_time = 0  # Hover'a başlama zamanı
-        self.hover_delay = 0.07  # Saniye cinsinden bekleme süresi
+        self.hover_delay = 0.05  # Saniye cinsinden bekleme süresi
+        self.theme_manager = ThemeManager()
 
     def paintEvent(self, a0):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
-        pen = QPen(cfg.THEME_COLORS["border"])
+        # ThemeManager'dan renkleri al
+        colors = self.theme_manager.current_theme
+
+        pen = QPen(QColor(colors["BORDER"]))  # Kenar rengi
         pen.setWidth(2)  # Kenar kalınlığı
         painter.setPen(pen)
 
@@ -65,11 +74,11 @@ class MainPanel(QWidget):
             for p in pn.children:
                 # Dolgu rengini belirle (hover, active veya normal)
                 if self.hover_node == p:
-                    painter.setBrush(QBrush(cfg.THEME_COLORS["hover"]))
+                    painter.setBrush(QBrush(QColor(colors["ACCENT_HOVER"])))
                 elif p == self.active_node and p.layer_index > 0:
-                    painter.setBrush(QBrush(cfg.THEME_COLORS["active"]))
+                    painter.setBrush(QBrush(QColor(colors["ACCENT_PRESSED"])))
                 else:
-                    painter.setBrush(QBrush(cfg.THEME_COLORS["normal"]))
+                    painter.setBrush(QBrush(QColor(colors["MAIN_BG"])))
 
                 painter.drawPolygon(p.piece_data.get_poligon())
 
@@ -77,7 +86,7 @@ class MainPanel(QWidget):
                 painter.save()
 
                 # Set text properties
-                painter.setPen(cfg.THEME_COLORS["text"])  # Text color
+                painter.setPen(QColor(colors["TEXT"]))  # Text color
 
                 # Get piece position and angle information
                 center_pos = p.piece_data.get_center_pos()

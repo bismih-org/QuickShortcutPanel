@@ -85,44 +85,62 @@
         ]
       },
       {
-        "title": "Uygulama",
+        "title": "Demo",
         "id": 4,
         "description": "a",
         "data": [],
         "children": [
           {
-            "title": "Yazılım",
+            "title": "Tarayıcı",
             "id": 5,
             "description": "yazılım ortamı",
             "data": [
               {
-                "type": "KEYBOARD_SHORTCUT",
+                "type": "OPEN_LINK",
                 "data": {
-                  "ctrl": false,
-                  "alt": false,
-                  "shift": false,
-                  "meta": true,
-                  "key": "F"
+                  "links": [
+                    "https://claude.ai/",
+                    "https://chat.openai.com/",
+                    "https://gemini.google.com/",
+                    "https://github.com/halak0013",
+                    "https://opac.fsm.edu.tr/vetisbt/?p=1&dil=tr",
+                    "https://typst.app/",
+                    "https://forum.pardus.org.tr/"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "title": "Ses",
+            "id": 6,
+            "description": "hızlıca habrleşmeyi aç",
+            "data": [
+              {
+                "type": "RUN_APP",
+                "data": {
+                  "name": "FreeTube",
+                  "exec": "/opt/FreeTube/freetube %U"
                 }
               },
               {
                 "type": "BASH_COMMAND",
                 "data": {
-                  "command": "code",
+                  "command": "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=blanket com.rafaelmardojai.Blanket",
                   "is_terminal": false
                 }
               }
             ]
           },
           {
-            "title": "haberleşme",
-            "id": 6,
-            "description": "hızlıca habrleşmeyi aç",
+            "title": "Makale",
+            "id": 29,
+            "description": "",
             "data": [
               {
                 "type": "BASH_COMMAND",
                 "data": {
-                  "command": "zoom &",
+                  "command": "dolphin /home/bismih/İndirilenler/Muhammet_Halak_2021221010/",
                   "is_terminal": false
                 }
               }
@@ -198,13 +216,24 @@
             "description": "Seçili metni çevirme",
             "data": [
               {
-                "type": "KEYBOARD_SHORTCUT",
+                "type": "BASH_COMMAND",
                 "data": {
-                  "ctrl": true,
-                  "alt": false,
-                  "shift": true,
-                  "meta": false,
-                  "key": "J"
+                  "command": "/home/bismih/Applications/sellected_text_translation/cevir.sh",
+                  "is_terminal": false
+                }
+              }
+            ]
+          },
+          {
+            "title": "Telefon ekranı",
+            "id": 28,
+            "description": "Telfon veya tablet ekranını paylaşma imkanı sağlar",
+            "data": [
+              {
+                "type": "RUN_APP",
+                "data": {
+                  "name": "scrcpy",
+                  "exec": "/bin/sh -c \"\\\\$SHELL -i -c scrcpy\""
                 }
               }
             ]
@@ -212,18 +241,15 @@
         ]
       },
       {
-        "title": "test",
+        "title": "Ayar",
         "id": 11,
         "description": "test",
         "data": [
           {
-            "type": "OPEN_LINK",
+            "type": "BASH_COMMAND",
             "data": {
-              "links": [
-                "https://pardus.org.tr/",
-                "https://chatgpt.com/",
-                "https://opac.fsm.edu.tr/vetisbt/?p=0&dil=tr"
-              ]
+              "command": "/mnt/nvme0n1p1/projelerimiz2/yazilim/sistem/QuickShortcutPanel/quick-shortcut-panel-config",
+              "is_terminal": false
             }
           }
         ],

@@ -1,0 +1,5 @@
+#!/bin/bash
+location=$(dirname "$0")
+
+cd /usr/share/quickshortcutpanel/
+python3 main_config.py
