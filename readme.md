@@ -274,10 +274,6 @@ logger = Log()
 logger.log("Debug mesajı", "d")
 ```
 
-## 📋 Bilinen Sorunlar
-
-- Wayland ile sınırlı uyumluluk (X11 önerilir)
-- bazı uygulamalarda window focus sorunları olabilir
 
 ## 📜 Lisans
 
