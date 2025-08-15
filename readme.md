@@ -2,6 +2,10 @@
 
 ![QuickShortcutPanel](doc/app_new.png)
 
+## Matematiksel arkaplanı
+<img width="1864" height="758" alt="son_menu_formulu" src="https://github.com/user-attachments/assets/2273e28b-7ad5-4e70-a507-87194f1ce4f4" />
+
+
 **QuickShortcutPanel**, Linux sistemlerde fare konumunda açılan dairesel bir kısayol paneli sağlayan PyQt6 tabanlı bir uygulamadır. Uygulamalarınıza, komutlarınıza ve eylemlerinize hızlı erişim için sezgisel bir arayüz sunar.
 
 ## ✨ Özellikler
